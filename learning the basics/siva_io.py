@@ -1,6 +1,8 @@
-def printNumber(n):
-    print(n)
+class Solution:
+    def printNumber(self):
+        n = int(input("Enter a number: "))
+        print(n)
 
 
-n = int(input())
-printNumber(n)
+obj = Solution()
+obj.printNumber()

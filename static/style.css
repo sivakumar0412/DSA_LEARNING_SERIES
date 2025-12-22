@@ -1,0 +1,217 @@
+/* Reset */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(120deg, #89f7fe, #66a6ff);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Main card */
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 14px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Card hover animation */
+.container:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 40px rgba(0,0,0,0.3);
+}
+
+/* Heading */
+h2 {
+    margin-bottom: 20px;
+}
+
+/* Inputs */
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+/* Input focus animation */
+input:focus {
+    outline: none;
+    border-color: #66a6ff;
+    box-shadow: 0 0 8px rgba(102, 166, 255, 0.7);
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 12px;
+    background: #66a6ff;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s, transform 0.2s;
+}
+
+/* Button hover */
+button:hover {
+    background: #4a90e2;
+    transform: scale(1.05);
+}
+
+/* Button click animation */
+button:active {
+    transform: scale(0.95);
+}
+
+/* Result text */
+.result {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #2ecc71;
+    animation: bounce 0.8s ease;
+}
+
+/* Page fade-in */
+.fade-in {
+    animation: fadeIn 1.2s ease-in;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%   { transform: scale(0.8); opacity: 0; }
+    60%  { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); }
+}
+/* Toggle container */
+.toggle-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    background-color: #ccc;
+    border-radius: 34px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: 0.4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #333;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Dark Mode */
+.dark-mode {
+    background: linear-gradient(120deg, #232526, #414345);
+}
+
+.dark-mode .container {
+    background: #2c2c2c;
+    color: white;
+}
+
+.dark-mode input {
+    background: #444;
+    color: white;
+    border: 1px solid #666;
+}
+
+.dark-mode button {
+    background: #555;
+}
+
+.dark-mode .result {
+    color: #00ff99;
+}
+
+/* Confetti container */
+#confetti-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Confetti pieces */
+.confetti {
+    position: absolute;
+    width: 8px;
+    height: 12px;
+    background-color: red;
+    opacity: 0.8;
+    animation: fall 3s linear forwards;
+}
+
+/* Falling animation */
+@keyframes fall {
+    0% {
+        transform: translateY(-10px) rotate(0deg);
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+    }
+}

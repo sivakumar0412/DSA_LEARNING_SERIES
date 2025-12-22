@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Age Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- Toggle Button -->
+    <div class="toggle-container">
+        <span>🌞</span>
+        <label class="switch">
+            <input type="checkbox" id="themeToggle" onclick="toggleTheme()">
+            <span class="slider"></span>
+        </label>
+        <span>🌙</span>
+    </div>
+
+    <div class="container fade-in">
+        <h2>🎂 Age Calculator</h2>
+
+        <form method="post">
+            <input type="number" name="year" placeholder="Birth Year" required>
+            <input type="number" name="month" placeholder="Birth Month" required>
+            <input type="number" name="day" placeholder="Birth Day" required>
+
+            <button type="submit">Calculate Age</button>
+        </form>
+
+        {% if age is not none %}
+            <p class="result">Your Age is: {{ age }} years</p>
+        {% endif %}
+    </div>
+
+    <!-- 🎉 Confetti container (MISSING BEFORE) -->
+    <div id="confetti-container"></div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

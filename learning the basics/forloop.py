@@ -19,3 +19,13 @@ for x in arr:
         mini = x
 
 print("Max:", maxi, "Min:", mini)
+
+
+# Reverse an array (no built-in)
+arr = [1, 2, 3, 4]
+rev = []
+
+for i in range(len(arr)-1, -1, -1):
+    rev.append(arr[i])
+
+print(rev)

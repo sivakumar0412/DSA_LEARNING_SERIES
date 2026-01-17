@@ -45,3 +45,14 @@ for x in arr:
         second = x
 
 print(second)
+
+# Missing number
+arr = [1, 2, 4, 5]
+n = 5
+total = n * (n + 1) // 2
+sum_arr = 0
+
+for x in arr:
+    sum_arr += x
+
+print(total - sum_arr)

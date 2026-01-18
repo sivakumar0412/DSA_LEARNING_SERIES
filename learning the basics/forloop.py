@@ -56,3 +56,12 @@ for x in arr:
     sum_arr += x
 
 print(total - sum_arr)
+
+#Linear Search
+arr = [4, 2, 7, 1]
+target = 7
+
+for i in range(len(arr)):
+    if arr[i] == target:
+        print("Found at index", i)
+        break

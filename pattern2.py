@@ -36,3 +36,64 @@ class Solution:
             stack.append(i)
 
         return span
+
+# Sum of subarray ranges
+
+
+class Solution:
+    def subarrayRanges(self, arr):
+        n = len(arr)
+
+        def sumSubarrayMins():
+            stack = []
+            left = [0] * n
+            right = [0] * n
+
+            for i in range(n):
+                count = 1
+                while stack and stack[-1][0] > arr[i]:
+                    count += stack.pop()[1]
+                stack.append((arr[i], count))
+                left[i] = count
+
+            stack.clear()
+            for i in range(n - 1, -1, -1):
+                count = 1
+                while stack and stack[-1][0] >= arr[i]:
+                    count += stack.pop()[1]
+                stack.append((arr[i], count))
+                right[i] = count
+
+            total = 0
+            for i in range(n):
+                total += arr[i] * left[i] * right[i]
+            return total
+
+        def sumSubarrayMaxs():
+            stack = []
+            left = [0] * n
+            right = [0] * n
+
+            for i in range(n):
+                count = 1
+                while stack and stack[-1][0] < arr[i]:
+                    count += stack.pop()[1]
+                stack.append((arr[i], count))
+                left[i] = count
+
+            stack.clear()
+
+            for i in range(n - 1, -1, -1):
+                count = 1
+                while stack and stack[-1][0] <= arr[i]:
+                    count += stack.pop()[1]
+                stack.append((arr[i], count))
+                right[i] = count
+
+            total = 0
+            for i in range(n):
+                total += arr[i] * left[i] * right[i]
+            return total
+
+        # Final result
+        return sumSubarrayMaxs() - sumSubarrayMins()

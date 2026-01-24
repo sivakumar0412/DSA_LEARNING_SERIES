@@ -5,10 +5,13 @@ for i in range(n):
         print("*", end="")
     print()
 
-# square pattern 
+# square pattern
+
+
 def square(rows):
     for i in range(rows):
         print("* " * rows)
+
 
 square(5)
 
@@ -97,3 +100,15 @@ class Solution:
 
         # Final result
         return sumSubarrayMaxs() - sumSubarrayMins()
+
+# Josephus problem
+
+
+class Solution:
+    def josephus(self, n, k):
+        survivor = 0
+
+        for i in range(1, n + 1):
+            survivor = (survivor + k) % i
+
+        return survivor + 1

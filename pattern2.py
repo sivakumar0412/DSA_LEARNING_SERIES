@@ -130,3 +130,28 @@ class Solution:
                 dp[i] += dp[j] * dp[i - 1 - j]
 
         return dp[pairs]
+
+
+# Generate Permutations of an array
+class Solution:
+    def permuteDist(self, arr):
+        res = []
+        n = len(arr)
+        used = [False] * n
+
+        def backtrack(path):
+            # If permutation is complete
+            if len(path) == n:
+                res.append(path[:])
+                return
+
+            for i in range(n):
+                if not used[i]:
+                    used[i] = True
+                    path.append(arr[i])
+                    backtrack(path)
+                    path.pop()       # backtrack
+                    used[i] = False
+
+        backtrack([])
+        return res

@@ -155,3 +155,38 @@ class Solution:
 
         backtrack([])
         return res
+
+# Count Subset With Target Sum II
+
+
+class Solution:
+    def countSubset(self, arr, k):
+        import bisect
+
+        n = len(arr)
+        mid = n // 2
+        left = arr[:mid]
+        right = arr[mid:]
+
+        def gen_sums(nums, idx, curr, res):
+            if idx == len(nums):
+                res.append(curr)
+                return
+            gen_sums(nums, idx + 1, curr, res)
+            gen_sums(nums, idx + 1, curr + nums[idx], res)
+
+        leftSums = []
+        rightSums = []
+
+        gen_sums(left, 0, 0, leftSums)
+        gen_sums(right, 0, 0, rightSums)
+        rightSums.sort()
+
+        count = 0
+        for s in leftSums:
+            target = k - s
+            l = bisect.bisect_left(rightSums, target)
+            r = bisect.bisect_right(rightSums, target)
+            count += (r - l)
+
+        return count

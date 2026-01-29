@@ -1,3 +1,4 @@
+from collections import deque
 n = 5
 for i in range(n):
     print("*", end="")
@@ -190,3 +191,30 @@ class Solution:
             count += (r - l)
 
         return count
+
+
+# Stream First Non-repeating
+
+
+class Solution:
+    def firstNonRepeating(self, s):
+        freq = [0] * 26
+        q = deque()
+        result = []
+
+        for ch in s:
+            idx = ord(ch) - ord('a')
+            freq[idx] += 1
+            q.append(ch)
+
+            # Remove repeating characters from front
+            while q and freq[ord(q[0]) - ord('a')] > 1:
+                q.popleft()
+
+            # Append answer for current prefix
+            if q:
+                result.append(q[0])
+            else:
+                result.append('#')
+
+        return "".join(result)

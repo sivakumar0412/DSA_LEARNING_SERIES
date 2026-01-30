@@ -218,3 +218,25 @@ class Solution:
                 result.append('#')
 
         return "".join(result)
+
+
+# Interleave the First Half of the Queue with Second Half
+
+
+class Solution:
+    def rearrangeQueue(self, q):
+        n = len(q)
+        half = n // 2
+
+        temp = deque()
+
+        # Step 1: Move first half to temp queue
+        for _ in range(half):
+            temp.append(q.popleft())
+
+        # Step 2: Interleave both halves
+        while temp:
+            q.append(temp.popleft())
+            q.append(q.popleft())
+
+        return q

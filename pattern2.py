@@ -313,3 +313,32 @@ class Solution:
                 result.append(arr[dq[0]])
 
         return result
+
+# Max Circular Subarray Sum
+
+
+class Solution:
+    def maxCircularSum(self, arr):
+        # Kadane for maximum subarray sum
+        max_ending = max_so_far = arr[0]
+        # Kadane for minimum subarray sum
+        min_ending = min_so_far = arr[0]
+
+        total_sum = arr[0]
+
+        for i in range(1, len(arr)):
+            x = arr[i]
+            max_ending = max(x, max_ending + x)
+            max_so_far = max(max_so_far, max_ending)
+
+            min_ending = min(x, min_ending + x)
+            min_so_far = min(min_so_far, min_ending)
+
+            total_sum += x
+
+        # If all elements are negative
+        if max_so_far < 0:
+            return max_so_far
+
+        # Maximum of non-wrapping and wrapping cases
+        return max(max_so_far, total_sum - min_so_far)

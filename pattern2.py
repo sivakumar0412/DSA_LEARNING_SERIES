@@ -342,3 +342,20 @@ class Solution:
 
         # Maximum of non-wrapping and wrapping cases
         return max(max_so_far, total_sum - min_so_far)
+
+# Last Moment Before All Ants Fall Out
+
+
+class Solution:
+    def getLastMoment(self, n, left, right):
+        last_time = 0
+
+        # Ants moving left
+        for pos in left:
+            last_time = max(last_time, pos)
+
+        # Ants moving right
+        for pos in right:
+            last_time = max(last_time, n - pos)
+
+        return last_time

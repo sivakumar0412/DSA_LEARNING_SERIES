@@ -359,3 +359,26 @@ class Solution:
             last_time = max(last_time, n - pos)
 
         return last_time
+
+# Maximize Number of 1's
+
+
+class Solution:
+    def maxOnes(self, arr, k):
+        left = 0
+        zero_count = 0
+        max_len = 0
+
+        for right in range(len(arr)):
+            if arr[right] == 0:
+                zero_count += 1
+
+            # Shrink window if zeros exceed k
+            while zero_count > k:
+                if arr[left] == 0:
+                    zero_count -= 1
+                left += 1
+
+            max_len = max(max_len, right - left + 1)
+
+        return max_len

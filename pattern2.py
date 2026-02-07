@@ -382,3 +382,26 @@ class Solution:
             max_len = max(max_len, right - left + 1)
 
         return max_len
+# Max sum in the configuration
+
+
+class Solution:
+    def maxSum(self, arr):
+        n = len(arr)
+
+        # Step 1: Calculate sum of array
+        arrSum = sum(arr)
+
+        # Step 2: Calculate initial value of i*arr[i]
+        currVal = 0
+        for i in range(n):
+            currVal += i * arr[i]
+
+        maxVal = currVal
+
+        # Step 3: Compute values for other rotations
+        for i in range(1, n):
+            currVal = currVal + arrSum - n * arr[n - i]
+            maxVal = max(maxVal, currVal)
+
+        return maxVal

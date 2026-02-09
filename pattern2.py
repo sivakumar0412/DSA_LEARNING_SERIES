@@ -405,3 +405,23 @@ class Solution:
             maxVal = max(maxVal, currVal)
 
         return maxVal
+
+# Find Kth Rotation
+
+
+class Solution:
+    def findKRotation(self, arr):
+        low = 0
+        high = len(arr) - 1
+
+        while low < high:
+            mid = (low + high) // 2
+
+            # Minimum lies in right part
+            if arr[mid] > arr[high]:
+                low = mid + 1
+            else:
+                high = mid
+
+        # low is the index of minimum element
+        return low

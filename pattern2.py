@@ -425,3 +425,30 @@ class Solution:
 
         # low is the index of minimum element
         return low
+
+# Koko Eating Bananas
+
+
+class Solution:
+    def kokoEat(self, arr, k):
+        import math
+
+        left = 1
+        right = max(arr)
+        answer = right
+
+        while left <= right:
+            mid = (left + right) // 2
+            hours = 0
+
+            # Calculate total hours needed at speed = mid
+            for bananas in arr:
+                hours += (bananas + mid - 1) // mid   # ceil division
+
+            if hours <= k:
+                answer = mid
+                right = mid - 1   # try smaller speed
+            else:
+                left = mid + 1    # need faster speed
+
+        return answer

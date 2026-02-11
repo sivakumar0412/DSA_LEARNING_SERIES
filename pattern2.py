@@ -452,3 +452,33 @@ class Solution:
                 left = mid + 1    # need faster speed
 
         return answer
+
+# Equalize the Towers
+
+
+class Solution:
+    def minCost(self, heights, cost):
+        def getCost(target):
+            total = 0
+            for h, c in zip(heights, cost):
+                total += abs(h - target) * c
+            return total
+
+        low = min(heights)
+        high = max(heights)
+
+        answer = getCost(low)
+
+        while low < high:
+            mid = (low + high) // 2
+            cost_mid = getCost(mid)
+            cost_next = getCost(mid + 1)
+
+            answer = min(answer, cost_mid, cost_next)
+
+            if cost_mid > cost_next:
+                low = mid + 1
+            else:
+                high = mid
+
+        return answer

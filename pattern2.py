@@ -523,3 +523,30 @@ class Solution:
                 high = mid - 1
 
         return answer
+ 
+ # All numbers with specific difference
+
+
+class Solution:
+    def getCount(self, n, d):
+
+        def digit_sum(x):
+            s = 0
+            while x:
+                s += x % 10
+                x //= 10
+            return s
+
+        # If n is too small, brute check only
+        limit = min(n, d + 162)
+
+        count = 0
+        for x in range(d, limit + 1):
+            if x - digit_sum(x) >= d:
+                count += 1
+
+        # All numbers >= d+163 are guaranteed valid
+        if n > d + 162:
+            count += n - (d + 162)
+
+        return count

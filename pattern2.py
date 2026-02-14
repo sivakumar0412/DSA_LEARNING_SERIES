@@ -550,3 +550,41 @@ class Solution:
             count += n - (d + 162)
 
         return count
+
+# The Painter's Partition Problem-II
+
+
+class Solution:
+    def minTime(self, arr, k):
+        # If painters >= boards, answer is max board
+        if k >= len(arr):
+            return max(arr)
+
+        def canPaint(max_time):
+            painters = 1
+            curr_sum = 0
+
+            for board in arr:
+                if curr_sum + board <= max_time:
+                    curr_sum += board
+                else:
+                    painters += 1
+                    curr_sum = board
+                    if painters > k:
+                        return False
+            return True
+
+        low = max(arr)
+        high = sum(arr)
+        answer = high
+
+        while low <= high:
+            mid = (low + high) // 2
+
+            if canPaint(mid):
+                answer = mid
+                high = mid - 1
+            else:
+                low = mid + 1
+
+        return answer

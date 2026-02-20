@@ -1,3 +1,4 @@
+from functools import cmp_to_key
 from collections import deque
 n = 5
 for i in range(n):
@@ -688,3 +689,29 @@ class Solution:
                 result.append(num)
 
         return result
+
+# Form the Largest Number
+
+
+class Solution:
+    def findLargest(self, arr):
+        # Convert to string
+        arr = list(map(str, arr))
+
+        # Custom comparator
+        def compare(a, b):
+            if a + b > b + a:
+                return -1
+            elif a + b < b + a:
+                return 1
+            else:
+                return 0
+
+        # Sort using comparator
+        arr.sort(key=cmp_to_key(compare))
+
+        # Join result
+        result = ''.join(arr)
+
+        # Edge case: all zeros
+        return '0' if result[0] == '0' else result

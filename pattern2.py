@@ -715,3 +715,20 @@ class Solution:
 
         # Edge case: all zeros
         return '0' if result[0] == '0' else result
+
+# Find H-Index
+
+
+class Solution:
+    def hIndex(self, citations):
+        # Sort in descending order
+        citations.sort(reverse=True)
+
+        h = 0
+        for i in range(len(citations)):
+            if citations[i] >= i + 1:
+                h = i + 1
+            else:
+                break
+
+        return h

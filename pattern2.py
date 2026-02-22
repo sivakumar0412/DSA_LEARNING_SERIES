@@ -732,3 +732,23 @@ class Solution:
                 break
 
         return h
+
+# Count Subarrays with given XOR
+
+
+class Solution:
+    def subarrayXor(self, arr, k):
+        freq = {0: 1}   # prefix XOR 0 occurs once
+        xr = 0
+        count = 0
+
+        for num in arr:
+            xr ^= num
+
+            # If (xr ^ k) seen before, add its count
+            count += freq.get(xr ^ k, 0)
+
+            # Update frequency of current prefix XOR
+            freq[xr] = freq.get(xr, 0) + 1
+
+        return count

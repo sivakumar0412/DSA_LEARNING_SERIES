@@ -752,3 +752,10 @@ class Solution:
             freq[xr] = freq.get(xr, 0) + 1
 
         return count
+
+# Union of Arrays with Duplicates
+class Solution:
+    def findUnion(self, a, b):
+        # Use set to remove duplicates
+        result = set(a) | set(b)
+        return list(result)

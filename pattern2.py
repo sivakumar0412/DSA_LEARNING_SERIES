@@ -759,3 +759,22 @@ class Solution:
         # Use set to remove duplicates
         result = set(a) | set(b)
         return list(result)
+
+# Longest Span in two Binary Arrays
+
+
+class Solution:
+    def equalSumSpan(self, a1, a2):
+        prefix_sum = 0
+        first_occ = {0: -1}   # sum 0 seen before index 0
+        max_len = 0
+
+        for i in range(len(a1)):
+            prefix_sum += a1[i] - a2[i]
+
+            if prefix_sum in first_occ:
+                max_len = max(max_len, i - first_occ[prefix_sum])
+            else:
+                first_occ[prefix_sum] = i
+
+        return max_len

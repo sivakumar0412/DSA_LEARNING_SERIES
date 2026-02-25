@@ -778,3 +778,30 @@ class Solution:
                 first_occ[prefix_sum] = i
 
         return max_len
+
+# Longest Subarray with Majority Greater than K
+
+
+class Solution:
+    def longestSubarray(self, arr, k):
+        n = len(arr)
+
+        # Step 1: Convert to +1 / -1
+        prefix = [0] * (n + 1)
+        for i in range(n):
+            prefix[i+1] = prefix[i] + (1 if arr[i] > k else -1)
+
+        # Step 2: Build decreasing stack
+        stack = []
+        for i in range(n + 1):
+            if not stack or prefix[i] < prefix[stack[-1]]:
+                stack.append(i)
+
+        # Step 3: Traverse from right to left
+        ans = 0
+        for j in range(n, -1, -1):
+            while stack and prefix[j] > prefix[stack[-1]]:
+                ans = max(ans, j - stack[-1])
+                stack.pop()
+
+        return ans

@@ -857,3 +857,20 @@ class Solution:
                 i += 1
 
         return result
+
+# Move All Zeroes to End
+class Solution:
+    def pushZerosToEnd(self, arr):
+        n = len(arr)
+        pos = 0  # position to place next non-zero element
+
+        # Move all non-zero elements to the front
+        for i in range(n):
+            if arr[i] != 0:
+                arr[pos] = arr[i]
+                pos += 1
+
+        # Fill remaining positions with zeros
+        while pos < n:
+            arr[pos] = 0
+            pos += 1

@@ -948,3 +948,29 @@ class Solution:
             max_xor = max(max_xor, curr_xor)
 
         return max_xor
+
+# Longest Substring with K Uniques
+
+
+class Solution:
+    def longestKSubstr(self, s, k):
+        left = 0
+        freq = {}
+        max_len = -1
+
+        for right in range(len(s)):
+            # Add character to window
+            freq[s[right]] = freq.get(s[right], 0) + 1
+
+            # Shrink window if distinct > k
+            while len(freq) > k:
+                freq[s[left]] -= 1
+                if freq[s[left]] == 0:
+                    del freq[s[left]]
+                left += 1
+
+            # Update max length when exactly k distinct
+            if len(freq) == k:
+                max_len = max(max_len, right - left + 1)
+
+        return max_len

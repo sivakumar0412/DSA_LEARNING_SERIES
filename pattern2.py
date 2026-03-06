@@ -974,3 +974,35 @@ class Solution:
                 max_len = max(max_len, right - left + 1)
 
         return max_len
+
+# Smallest window containing all characters
+class Solution:
+    def minWindow(self, s, p):
+        from collections import Counter
+        
+        freq = Counter(p)
+        need = len(p)
+        left = 0
+        min_len = float('inf')
+        start = 0
+        
+        for right in range(len(s)):
+            if freq[s[right]] > 0:
+                need -= 1
+            freq[s[right]] -= 1
+            
+            # When all characters matched
+            while need == 0:
+                if right - left + 1 < min_len:
+                    min_len = right - left + 1
+                    start = left
+                
+                freq[s[left]] += 1
+                if freq[s[left]] > 0:
+                    need += 1
+                left += 1
+        
+        if min_len == float('inf'):
+            return ""
+        
+        return s[start:start + min_len]

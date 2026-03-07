@@ -1006,3 +1006,21 @@ class Solution:
             return ""
         
         return s[start:start + min_len]
+
+# Dice throw
+
+
+class Solution:
+    def noOfWays(self, m, n, x):
+        # DP table
+        dp = [[0] * (x + 1) for _ in range(n + 1)]
+
+        dp[0][0] = 1
+
+        for i in range(1, n + 1):
+            for j in range(1, x + 1):
+                for f in range(1, m + 1):
+                    if j - f >= 0:
+                        dp[i][j] += dp[i-1][j-f]
+
+        return dp[n][x]

@@ -1024,3 +1024,20 @@ class Solution:
                         dp[i][j] += dp[i-1][j-f]
 
         return dp[n][x]
+
+# Pythagorean Triplet
+class Solution:
+    def pythagoreanTriplet(self, arr):
+        n = len(arr)
+
+        # square all values
+        squares = set(x*x for x in arr)
+
+        arr = [x*x for x in arr]
+
+        for i in range(n):
+            for j in range(i+1, n):
+                if arr[i] + arr[j] in squares:
+                    return True
+
+        return False

@@ -1041,3 +1041,26 @@ class Solution:
                     return True
 
         return False
+
+# Largest number in one swap
+
+class Solution:
+    def largestSwap(self, s):
+        arr = list(s)
+        n = len(arr)
+
+        # store last index of each digit
+        last = [-1]*10
+        for i in range(n):
+            last[int(arr[i])] = i
+
+        # try to improve from left to right
+        for i in range(n):
+            current = int(arr[i])
+
+            for d in range(9, current, -1):
+                if last[d] > i:
+                    arr[i], arr[last[d]] = arr[last[d]], arr[i]
+                    return "".join(arr)
+
+        return s

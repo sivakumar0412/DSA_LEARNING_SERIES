@@ -1064,3 +1064,23 @@ class Solution:
                     return "".join(arr)
 
         return s
+
+# Subarrays with First Element Minimum
+
+class Solution:
+    def countSubarrays(self, arr):
+        n = len(arr)
+        stack = []
+        ans = 0
+        
+        for i in range(n):
+            while stack and arr[stack[-1]] > arr[i]:
+                idx = stack.pop()
+                ans += i - idx
+            stack.append(i)
+        
+        while stack:
+            idx = stack.pop()
+            ans += n - idx
+        
+        return ans

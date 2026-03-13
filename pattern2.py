@@ -1149,3 +1149,32 @@ class Solution:
                 ans += 1
 
         return ans
+
+
+# Generate IP Addresses
+class Solution:
+    def generateIp(self, s):
+        res = []
+        n = len(s)
+
+        def valid(part):
+            if len(part) > 1 and part[0] == '0':
+                return False
+            return 0 <= int(part) <= 255
+
+        def backtrack(start, parts, path):
+            if parts == 4 and start == n:
+                res.append(".".join(path))
+                return
+
+            if parts == 4:
+                return
+
+            for length in range(1, 4):
+                if start + length <= n:
+                    part = s[start:start+length]
+                    if valid(part):
+                        backtrack(start+length, parts+1, path+[part])
+
+        backtrack(0, 0, [])
+        return res

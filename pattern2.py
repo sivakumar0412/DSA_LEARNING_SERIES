@@ -1178,3 +1178,36 @@ class Solution:
 
         backtrack(0, 0, [])
         return res
+
+# Top View of Binary Tree
+
+
+class Solution:
+    def topView(self, root):
+        if not root:
+            return []
+
+        q = deque()
+        q.append((root, 0))   # (node, horizontal distance)
+
+        top = {}
+
+        while q:
+            node, hd = q.popleft()
+
+            # store first node at this horizontal distance
+            if hd not in top:
+                top[hd] = node.data
+
+            if node.left:
+                q.append((node.left, hd - 1))
+
+            if node.right:
+                q.append((node.right, hd + 1))
+
+        # sort by horizontal distance
+        result = []
+        for key in sorted(top.keys()):
+            result.append(top[key])
+
+        return result

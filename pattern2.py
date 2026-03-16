@@ -1,3 +1,4 @@
+from collections import defaultdict
 from functools import cmp_to_key
 from collections import deque
 n = 5
@@ -1211,3 +1212,34 @@ class Solution:
             result.append(top[key])
 
         return result
+
+
+# K Sum Paths
+
+
+class Solution:
+    def countAllPaths(self, root, k):
+        prefix = defaultdict(int)
+        prefix[0] = 1
+        count = 0
+
+        def dfs(node, curr_sum):
+            nonlocal count
+            if not node:
+                return
+
+            curr_sum += node.data
+
+            # check if path with sum k ends here
+            count += prefix[curr_sum - k]
+
+            prefix[curr_sum] += 1
+
+            dfs(node.left, curr_sum)
+            dfs(node.right, curr_sum)
+
+            # backtrack
+            prefix[curr_sum] -= 1
+
+        dfs(root, 0)
+        return count

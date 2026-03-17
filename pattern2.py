@@ -1243,3 +1243,53 @@ class Solution:
 
         dfs(root, 0)
         return count
+
+
+# Burning Tree
+
+
+class Solution:
+    def minTime(self, root, target):
+
+        # Step 1: Build parent mapping
+        parent = {}
+        target_node = None
+
+        def dfs(node, par):
+            nonlocal target_node
+            if not node:
+                return
+
+            parent[node] = par
+
+            if node.data == target:
+                target_node = node
+
+            dfs(node.left, node)
+            dfs(node.right, node)
+
+        dfs(root, None)
+
+        # Step 2: BFS (burning process)
+        q = deque([target_node])
+        visited = set([target_node])
+
+        time = 0
+
+        while q:
+            size = len(q)
+            burned = False
+
+            for _ in range(size):
+                node = q.popleft()
+
+                for neighbor in [node.left, node.right, parent[node]]:
+                    if neighbor and neighbor not in visited:
+                        visited.add(neighbor)
+                        q.append(neighbor)
+                        burned = True
+
+            if burned:
+                time += 1
+
+        return time

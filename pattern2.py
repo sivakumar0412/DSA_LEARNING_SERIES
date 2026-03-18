@@ -1293,3 +1293,25 @@ class Solution:
                 time += 1
 
         return time
+
+# Distribute Candies
+
+class Solution:
+    def distCandy(self, root):
+        self.moves = 0
+
+        def dfs(node):
+            if not node:
+                return 0
+
+            left = dfs(node.left)
+            right = dfs(node.right)
+
+            # count moves
+            self.moves += abs(left) + abs(right)
+
+            # return net candies to parent
+            return node.data + left + right - 1
+
+        dfs(root)
+        return self.moves

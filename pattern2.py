@@ -1315,3 +1315,35 @@ class Solution:
 
         dfs(root)
         return self.moves
+
+# Largest BST
+
+
+class Solution:
+    def largestBst(self, root):
+        self.ans = 0
+
+        def dfs(node):
+            if not node:
+                return (True, 0, float('inf'), float('-inf'))
+                # (isBST, size, min, max)
+
+            left = dfs(node.left)
+            right = dfs(node.right)
+
+            # check BST condition
+            if left[0] and right[0] and left[3] < node.data < right[2]:
+                size = left[1] + right[1] + 1
+                self.ans = max(self.ans, size)
+
+                return (
+                    True,
+                    size,
+                    min(node.data, left[2]),
+                    max(node.data, right[3])
+                )
+            else:
+                return (False, 0, 0, 0)
+
+        dfs(root)
+        return self.ans

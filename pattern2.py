@@ -1462,3 +1462,37 @@ class Solution:
                 time += 1
 
         return time if fresh == 0 else -1
+
+
+# Length of Longest Cycle in a Graph
+class Solution:
+    def longestCycle(self, V, edges):
+        # create adjacency (each node has at most one outgoing)
+        graph = [-1] * V
+        for u, v in edges:
+            graph[u] = v
+
+        visited = [False] * V
+        ans = -1
+
+        for i in range(V):
+            if visited[i]:
+                continue
+
+            curr = i
+            step_map = {}   # node → step
+            step = 0
+
+            while curr != -1 and not visited[curr]:
+                visited[curr] = True
+                step_map[curr] = step
+                step += 1
+                curr = graph[curr]
+
+                # cycle detected
+                if curr in step_map:
+                    cycle_len = step - step_map[curr]
+                    ans = max(ans, cycle_len)
+                    break
+
+        return ans

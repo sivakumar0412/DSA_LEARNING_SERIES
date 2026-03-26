@@ -1571,3 +1571,46 @@ class Solution:
                         q.append(nei)
 
         return list(q)
+
+# Number of Ways to Arrive at Destination
+import heapq
+
+class Solution:
+    def countPaths(self, V, edges):
+        MOD = 10**9 + 7
+
+        # Build graph
+        graph = [[] for _ in range(V)]
+        for u, v, w in edges:
+            graph[u].append((v, w))
+            graph[v].append((u, w))
+
+        # Dijkstra setup
+        dist = [float('inf')] * V
+        ways = [0] * V
+
+        dist[0] = 0
+        ways[0] = 1
+
+        pq = [(0, 0)]  # (distance, node)
+
+        while pq:
+            d, node = heapq.heappop(pq)
+
+            if d > dist[node]:
+                continue
+
+            for nei, w in graph[node]:
+                new_dist = d + w
+
+                # shorter path found
+                if new_dist < dist[nei]:
+                    dist[nei] = new_dist
+                    ways[nei] = ways[node]
+                    heapq.heappush(pq, (new_dist, nei))
+
+                # another shortest path
+                elif new_dist == dist[nei]:
+                    ways[nei] = (ways[nei] + ways[node]) % MOD
+
+        return ways[V - 1] % MOD

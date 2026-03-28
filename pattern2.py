@@ -1614,3 +1614,57 @@ class Solution:
                     ways[nei] = (ways[nei] + ways[node]) % MOD
 
         return ways[V - 1] % MOD
+
+# Articulation Point - II
+
+
+class Solution:
+    def articulationPoints(self, V, edges):
+        # build graph
+        graph = [[] for _ in range(V)]
+        for u, v in edges:
+            graph[u].append(v)
+            graph[v].append(u)
+
+        disc = [-1] * V
+        low = [-1] * V
+        parent = [-1] * V
+        visited = [False] * V
+        ap = [False] * V
+
+        time = 0
+
+        def dfs(u):
+            nonlocal time
+            visited[u] = True
+            disc[u] = low[u] = time
+            time += 1
+            children = 0
+
+            for v in graph[u]:
+                if not visited[v]:
+                    parent[v] = u
+                    children += 1
+                    dfs(v)
+
+                    low[u] = min(low[u], low[v])
+
+                    # Case 1: root
+                    if parent[u] == -1 and children > 1:
+                        ap[u] = True
+
+                    # Case 2: non-root
+                    if parent[u] != -1 and low[v] >= disc[u]:
+                        ap[u] = True
+
+                elif v != parent[u]:
+                    low[u] = min(low[u], disc[v])
+
+        # handle disconnected graph
+        for i in range(V):
+            if not visited[i]:
+                dfs(i)
+
+        result = [i for i in range(V) if ap[i]]
+
+        return result if result else [-1]

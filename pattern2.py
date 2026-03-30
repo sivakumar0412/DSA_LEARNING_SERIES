@@ -1691,3 +1691,34 @@ class Solution:
                 dp[j] += dp[j - num]
 
         return dp[target]
+
+# Minimum cost to connect all houses in a city
+
+
+class Solution:
+    def minCost(self, houses):
+        n = len(houses)
+        visited = [False] * n
+
+        minHeap = [(0, 0)]  # (cost, node)
+        total_cost = 0
+        edges_used = 0
+
+        while edges_used < n:
+            cost, u = heapq.heappop(minHeap)
+
+            if visited[u]:
+                continue
+
+            visited[u] = True
+            total_cost += cost
+            edges_used += 1
+
+            # explore all neighbors
+            for v in range(n):
+                if not visited[v]:
+                    dist = abs(houses[u][0] - houses[v][0]) + \
+                        abs(houses[u][1] - houses[v][1])
+                    heapq.heappush(minHeap, (dist, v))
+
+        return total_cost

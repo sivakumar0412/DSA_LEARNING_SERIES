@@ -1722,3 +1722,21 @@ class Solution:
                     heapq.heappush(minHeap, (dist, v))
 
         return total_cost
+
+# Buy Stock with Transaction Fee
+
+
+class Solution:
+    def maxProfit(self, arr, k):
+        if not arr:
+            return 0
+
+        hold = -arr[0]   # buying first stock
+        cash = 0         # no stock
+
+        for price in arr[1:]:
+            # update hold and cash
+            hold = max(hold, cash - price)
+            cash = max(cash, hold + price - k)
+
+        return cash

@@ -1740,3 +1740,22 @@ class Solution:
             cash = max(cash, hold + price - k)
 
         return cash
+
+# Painting the Fence
+class Solution:
+    def countWays(self, n, k):
+        # Base case: if only one post, we can paint it in k ways
+        if n == 1:
+            return k
+        
+        # For two posts:
+        same = k          # both posts same color
+        diff = k * (k - 1)  # both posts different colors
+        
+        # For posts from 3 to n
+        for i in range(3, n + 1):
+            new_same = diff
+            new_diff = (same + diff) * (k - 1)
+            same, diff = new_same, new_diff
+        
+        return same + diff

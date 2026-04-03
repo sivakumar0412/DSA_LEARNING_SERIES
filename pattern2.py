@@ -1759,3 +1759,29 @@ class Solution:
             same, diff = new_same, new_diff
         
         return same + diff
+
+# Print Diagonally
+class Solution:
+    def diagView(self, mat):
+        n = len(mat)
+        result = []
+
+        # upper half (first row)
+        for col in range(n):
+            i = 0
+            j = col
+            while i < n and j >= 0:
+                result.append(mat[i][j])
+                i += 1
+                j -= 1
+
+        # lower half (last column)
+        for row in range(1, n):
+            i = row
+            j = n - 1
+            while i < n and j >= 0:
+                result.append(mat[i][j])
+                i += 1
+                j -= 1
+
+        return result

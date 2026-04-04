@@ -1785,3 +1785,25 @@ class Solution:
                 j -= 1
 
         return result
+
+# Gray Code
+
+
+class Solution:
+    def graycode(self, n):
+        res = [""]
+
+        for i in range(n):
+            temp = []
+
+            # prefix 0
+            for code in res:
+                temp.append("0" + code)
+
+            # prefix 1 (reverse)
+            for code in reversed(res):
+                temp.append("1" + code)
+
+            res = temp
+
+        return res

@@ -1807,3 +1807,54 @@ class Solution:
             res = temp
 
         return res
+
+# Huffman Encoding
+import heapq
+
+class Node:
+    def __init__(self, char, freq, idx):
+        self.char = char
+        self.freq = freq
+        self.idx = idx   # tie-breaker: order of appearance
+        self.left = None
+        self.right = None
+
+    def __lt__(self, other):
+        if self.freq == other.freq:
+            return self.idx < other.idx
+        return self.freq < other.freq
+
+class Solution:
+    def huffmanCodes(self, s, f):
+        # Edge case: only one character
+        if len(s) == 1:
+            return ["0"]
+
+        # Step 1: Build heap
+        heap = []
+        for i in range(len(s)):
+            heapq.heappush(heap, Node(s[i], f[i], i))
+        
+        # Step 2: Build Huffman Tree
+        while len(heap) > 1:
+            left = heapq.heappop(heap)
+            right = heapq.heappop(heap)
+            merged = Node(None, left.freq + right.freq, min(left.idx, right.idx))
+            merged.left = left
+            merged.right = right
+            heapq.heappush(heap, merged)
+        
+        root = heap[0]
+        
+        # Step 3: Preorder traversal to collect codes
+        codes = []
+        def preorder(node, code):
+            if node is None:
+                return
+            if node.char is not None:  # leaf node
+                codes.append(code)
+            preorder(node.left, code + "0")
+            preorder(node.right, code + "1")
+        
+        preorder(root, "")
+        return codes

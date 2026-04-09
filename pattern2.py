@@ -1859,6 +1859,8 @@ class Solution:
         preorder(root, "")
         return codes
 # Segregate 0s and 1s
+
+
 class Solution:
     def segregate0and1(self, arr):
         # Step 1: Count number of 0s
@@ -1873,3 +1875,23 @@ class Solution:
             arr[i] = 1
 
         return arr
+
+# Intersection of Two Sorted Arrays
+class Solution:
+    def intersection(self, a, b):
+        i, j = 0, 0
+        result = []
+        
+        while i < len(a) and j < len(b):
+            if a[i] == b[j]:
+                # Add only distinct elements
+                if not result or result[-1] != a[i]:
+                    result.append(a[i])
+                i += 1
+                j += 1
+            elif a[i] < b[j]:
+                i += 1
+            else:
+                j += 1
+        
+        return result

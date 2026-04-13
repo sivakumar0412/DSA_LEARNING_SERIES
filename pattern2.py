@@ -1909,3 +1909,57 @@ class Solution:
                 if mat[i][j] != mat[i-1][j-1]:
                     return False
         return True
+
+# Next Smallest Palindrome
+class Solution:
+    def nextPalindrome(self, num):
+        n = len(num)
+        
+        # Step 1: Create a copy
+        result = num[:]
+        
+        # Step 2: Mirror left to right
+        for i in range(n // 2):
+            result[n - i - 1] = result[i]
+        
+        # Step 3: Check if result > num
+        if result > num:
+            return result
+        
+        # Step 4: Add 1 to middle
+        carry = 1
+        mid = n // 2
+        
+        # If odd length
+        if n % 2 == 1:
+            result[mid] += carry
+            carry = result[mid] // 10
+            result[mid] %= 10
+            left = mid - 1
+            right = mid + 1
+        else:
+            left = mid - 1
+            right = mid
+        
+        # Handle carry
+        while left >= 0 and carry:
+            result[left] += carry
+            carry = result[left] // 10
+            result[left] %= 10
+            result[right] = result[left]
+            left -= 1
+            right += 1
+        
+        # If still carry (like 999 → 1001)
+        if carry:
+            result = [1] + [0] * (n - 1) + [1]
+            return result
+        
+        # Final mirror
+        while left >= 0:
+            result[right] = result[left]
+            left -= 1
+            right += 1
+        
+        return result
+        

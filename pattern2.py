@@ -1963,3 +1963,41 @@ class Solution:
         
         return result
         
+# Implement Atoi
+
+
+class Solution:
+    def myAtoi(self, s):
+        # Step 1: Trim leading whitespaces
+        s = s.lstrip()
+        if not s:
+            return 0
+
+        # Step 2: Handle sign
+        sign = 1
+        index = 0
+        if s[0] == '-':
+            sign = -1
+            index += 1
+        elif s[0] == '+':
+            index += 1
+
+        # Step 3: Read digits
+        result = 0
+        while index < len(s) and s[index].isdigit():
+            digit = ord(s[index]) - ord('0')  # convert char to int
+            result = result * 10 + digit
+            index += 1
+
+        # Step 4: Apply sign
+        result *= sign
+
+        # Step 5: Handle overflow
+        INT_MAX = 2**31 - 1
+        INT_MIN = -2**31
+        if result > INT_MAX:
+            return INT_MAX
+        if result < INT_MIN:
+            return INT_MIN
+
+        return result

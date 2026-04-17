@@ -2001,3 +2001,20 @@ class Solution:
             return INT_MIN
 
         return result
+
+# Anagram Palindrome
+class Solution:
+    def canFormPalindrome(self, s):
+        # Step 1: Count frequency of each character
+        freq = {}
+        for ch in s:
+            freq[ch] = freq.get(ch, 0) + 1
+        
+        # Step 2: Count odd occurrences
+        odd_count = 0
+        for count in freq.values():
+            if count % 2 != 0:
+                odd_count += 1
+        
+        # Step 3: Check palindrome condition
+        return odd_count <= 1

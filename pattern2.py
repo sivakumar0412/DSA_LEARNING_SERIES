@@ -2018,3 +2018,26 @@ class Solution:
         
         # Step 3: Check palindrome condition
         return odd_count <= 1
+
+# Flip to Maximize 1s
+class Solution:
+    def maxOnes(self, arr):
+        # Step 1: Count original 1s
+        original_ones = sum(arr)
+        
+        # Step 2: Transform array (0 -> +1, 1 -> -1)
+        transformed = [1 if x == 0 else -1 for x in arr]
+        
+        # Step 3: Kadane's algorithm to find max subarray sum
+        max_gain = float('-inf')
+        current_sum = 0
+        for val in transformed:
+            current_sum = max(val, current_sum + val)
+            max_gain = max(max_gain, current_sum)
+        
+        # Step 4: If all are 1s, no flip improves result
+        if original_ones == len(arr):
+            return original_ones
+        
+        # Step 5: Add best gain to original 1s
+        return original_ones + max_gain

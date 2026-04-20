@@ -2041,3 +2041,24 @@ class Solution:
         
         # Step 5: Add best gain to original 1s
         return original_ones + max_gain
+
+# Count Derangements
+
+
+class Solution:
+    def derangeCount(self, n: int) -> int:
+        # Base cases
+        if n == 0:
+            return 1
+        if n == 1:
+            return 0
+
+        # DP array
+        dp = [0] * (n + 1)
+        dp[0], dp[1] = 1, 0
+
+        # Fill using recurrence
+        for i in range(2, n + 1):
+            dp[i] = (i - 1) * (dp[i - 1] + dp[i - 2])
+
+        return dp[n]

@@ -2062,3 +2062,24 @@ class Solution:
             dp[i] = (i - 1) * (dp[i - 1] + dp[i - 2])
 
         return dp[n]
+
+# Mean of range in array
+
+
+class Solution:
+    def findMean(self, arr, queries):
+        n = len(arr)
+
+        # Step 1: Build prefix sum
+        prefix = [0] * n
+        prefix[0] = arr[0]
+        for i in range(1, n):
+            prefix[i] = prefix[i-1] + arr[i]
+
+        # Step 2: Answer queries
+        result = []
+        for l, r in queries:
+            total = prefix[r] - (prefix[l-1] if l > 0 else 0)
+            length = r - l + 1
+            result.append(total // length)  # floor division
+        return result

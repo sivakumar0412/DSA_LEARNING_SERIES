@@ -2083,3 +2083,23 @@ class Solution:
             length = r - l + 1
             result.append(total // length)  # floor division
         return result
+
+# Two Equal Sum Subarrays
+class Solution:
+    def canSplit(self, arr):
+        total_sum = sum(arr)
+        
+        # If total sum is odd, cannot split equally
+        if total_sum % 2 != 0:
+            return False
+        
+        target = total_sum // 2
+        prefix_sum = 0
+        
+        # Check if any prefix equals target
+        for num in arr:
+            prefix_sum += num
+            if prefix_sum == target:
+                return True
+        
+        return False

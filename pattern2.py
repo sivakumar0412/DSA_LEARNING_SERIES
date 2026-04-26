@@ -2103,3 +2103,31 @@ class Solution:
                 return True
         
         return False
+
+# Common in 3 Sorted Arrays
+
+
+class Solution:
+    def commonElements(self, a, b, c):
+        i, j, k = 0, 0, 0
+        res = []
+
+        while i < len(a) and j < len(b) and k < len(c):
+            # Case 1: All three are equal
+            if a[i] == b[j] == c[k]:
+                # Avoid duplicates
+                if not res or res[-1] != a[i]:
+                    res.append(a[i])
+                i += 1
+                j += 1
+                k += 1
+
+            # Case 2: Move the smallest pointer
+            elif a[i] < b[j]:
+                i += 1
+            elif b[j] < c[k]:
+                j += 1
+            else:
+                k += 1
+
+        return res

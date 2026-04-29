@@ -2131,3 +2131,22 @@ class Solution:
                 k += 1
 
         return res
+
+# Min Swaps to Group 1s
+class Solution:
+    def minSwaps(self, arr):
+        total_ones = sum(arr)
+        if total_ones == 0:
+            return -1
+        
+        # Initial window of size total_ones
+        window_ones = sum(arr[:total_ones])
+        max_ones = window_ones
+        
+        # Sliding window
+        for i in range(total_ones, len(arr)):
+            window_ones += arr[i] - arr[i - total_ones]
+            max_ones = max(max_ones, window_ones)
+        
+        # Minimum swaps = missing ones in best window
+        return total_ones - max_ones

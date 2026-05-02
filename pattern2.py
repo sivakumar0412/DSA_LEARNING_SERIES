@@ -2191,3 +2191,15 @@ class Solution:
                 result.append(heap[0])
         
         return result
+
+# Position of the Set Bit
+import math
+
+class Solution:
+    def findPosition(self, n):
+        # Case 1: n must be > 0 and power of 2
+        if n > 0 and (n & (n - 1)) == 0:
+            # Position = log2(n) + 1
+            return int(math.log2(n)) + 1
+        else:
+            return -1

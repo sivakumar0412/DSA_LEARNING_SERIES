@@ -2203,3 +2203,12 @@ class Solution:
             return int(math.log2(n)) + 1
         else:
             return -1
+
+# Palindrome Binary
+class Solution:
+    def isBinaryPalindrome(self, n):
+        # Step 1: Convert to binary string
+        binary_str = bin(n)[2:]  # remove '0b' prefix
+        
+        # Step 2: Check if palindrome
+        return binary_str == binary_str[::-1]

@@ -2212,3 +2212,67 @@ class Solution:
         
         # Step 2: Check if palindrome
         return binary_str == binary_str[::-1]
+
+# Remove Invalid Parentheses
+class Solution:
+    def validParenthesis(self, s):
+
+        # function to check string is valid or not
+        def isValid(st):
+            balance = 0
+
+            for ch in st:
+
+                if ch == '(':
+                    balance += 1
+
+                elif ch == ')':
+                    balance -= 1
+
+                # if closing bracket comes extra
+                if balance < 0:
+                    return False
+
+            # at end balance should be 0
+            return balance == 0
+
+
+        from collections import deque
+
+        q = deque()
+        visited = set()
+        ans = []
+
+        q.append(s)
+        visited.add(s)
+
+        found = False
+
+        while q:
+
+            curr = q.popleft()
+
+            # check current string valid or not
+            if isValid(curr):
+                ans.append(curr)
+                found = True
+
+            # if valid string found,
+            # don't remove more brackets
+            if found:
+                continue
+
+            # remove one bracket at every position
+            for i in range(len(curr)):
+
+                # skip normal characters
+                if curr[i] not in '()':
+                    continue
+
+                newStr = curr[:i] + curr[i+1:]
+
+                if newStr not in visited:
+                    visited.add(newStr)
+                    q.append(newStr)
+
+        return sorted(list(set(ans)))

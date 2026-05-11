@@ -2276,3 +2276,36 @@ class Solution:
                     q.append(newStr)
 
         return sorted(list(set(ans)))
+
+# Palindrome Pairs
+class Solution:
+    def palindromePair(self, arr):
+        # Step 1: Map each word to its index
+        word_map = {word: i for i, word in enumerate(arr)}
+        
+        # Helper function to check palindrome
+        def is_palindrome(s):
+            return s == s[::-1]
+        
+        # Step 2: Iterate through each word
+        for i, word in enumerate(arr):
+            n = len(word)
+            
+            # Split word into prefix and suffix
+            for cut in range(n + 1):
+                prefix, suffix = word[:cut], word[cut:]
+                
+                # Case 1: If prefix is palindrome, check reversed suffix
+                if is_palindrome(prefix):
+                    rev_suffix = suffix[::-1]
+                    if rev_suffix in word_map and word_map[rev_suffix] != i:
+                        return True
+                
+                # Case 2: If suffix is palindrome, check reversed prefix
+                # (cut != n avoids duplicate check when suffix is empty)
+                if cut != n and is_palindrome(suffix):
+                    rev_prefix = prefix[::-1]
+                    if rev_prefix in word_map and word_map[rev_prefix] != i:
+                        return True
+        
+        return False

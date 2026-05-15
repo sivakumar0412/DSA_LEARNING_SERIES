@@ -2340,3 +2340,19 @@ class Solution:
         if all(visited):
             return candidate
         return -1
+
+# Special Keyboard
+class Solution:
+    def optimalKeys(self, n: int) -> int:
+        # DP array to store max 'A's for each keystroke count
+        dp = [0] * (n + 1)
+
+        for i in range(1, n + 1):
+            # Option 1: Just press 'A'
+            dp[i] = dp[i - 1] + 1
+
+            # Option 2: Use Ctrl+A, Ctrl+C, then multiple Ctrl+V
+            for j in range(1, i - 2):  # j is the point where we copy
+                dp[i] = max(dp[i], dp[j] * (i - j - 1))
+
+        return dp[n]

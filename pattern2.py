@@ -2356,3 +2356,21 @@ class Solution:
                 dp[i] = max(dp[i], dp[j] * (i - j - 1))
 
         return dp[n]
+
+# Make the array beautiful
+class Solution:
+    def makeBeautiful(self, arr: list[int]) -> list[int]:
+        
+        stack = []
+
+        for num in arr:
+
+            # if signs are different
+            if stack and ((stack[-1] >= 0 and num < 0) or 
+                          (stack[-1] < 0 and num >= 0)):
+                stack.pop()
+
+            else:
+                stack.append(num)
+
+        return stack

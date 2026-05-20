@@ -2374,3 +2374,33 @@ class Solution:
                 stack.append(num)
 
         return stack
+
+
+# Minimum Multiplications to reach End
+
+
+class Solution:
+    def minSteps(self, arr, start, end):
+        # If start is already equal to end
+        if start == end:
+            return 0
+
+        # Queue for BFS: (value, steps)
+        q = deque([(start, 0)])
+
+        # Visited states (0-999)
+        visited = [False] * 1000
+        visited[start] = True
+
+        while q:
+            val, steps = q.popleft()
+
+            for num in arr:
+                nxt = (val * num) % 1000
+                if not visited[nxt]:
+                    if nxt == end:
+                        return steps + 1
+                    visited[nxt] = True
+                    q.append((nxt, steps + 1))
+
+        return -1

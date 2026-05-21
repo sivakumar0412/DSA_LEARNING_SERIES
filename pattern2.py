@@ -2404,3 +2404,24 @@ class Solution:
                     q.append((nxt, steps + 1))
 
         return -1
+
+# Product Pair
+class Solution:
+    def isProduct(self, arr, target):
+        seen = set()
+        
+        for num in arr:
+            # Special case: target = 0
+            if target == 0:
+                if num == 0 or 0 in seen:
+                    return True
+            
+            # Avoid division by zero
+            if num != 0 and target % num == 0:
+                complement = target // num
+                if complement in seen:
+                    return True
+            
+            seen.add(num)
+        
+        return False

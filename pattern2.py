@@ -2425,3 +2425,43 @@ class Solution:
             seen.add(num)
         
         return False
+
+# 1s Surrounded by 0s
+
+
+class Solution:
+    def cntOnes(self, grid):
+        n, m = len(grid), len(grid[0])
+        visited = [[False] * m for _ in range(n)]
+
+        # Directions: up, down, left, right
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+
+        def bfs(i, j):
+            from collections import deque
+            q = deque()
+            q.append((i, j))
+            visited[i][j] = True
+            while q:
+                x, y = q.popleft()
+                for dx, dy in directions:
+                    nx, ny = x + dx, y + dy
+                    if 0 <= nx < n and 0 <= ny < m:
+                        if grid[nx][ny] == 1 and not visited[nx][ny]:
+                            visited[nx][ny] = True
+                            q.append((nx, ny))
+
+        # Step 1: Start BFS from boundary 1s
+        for i in range(n):
+            for j in range(m):
+                if (i == 0 or i == n-1 or j == 0 or j == m-1) and grid[i][j] == 1 and not visited[i][j]:
+                    bfs(i, j)
+
+        # Step 2: Count trapped 1s
+        trapped = 0
+        for i in range(n):
+            for j in range(m):
+                if grid[i][j] == 1 and not visited[i][j]:
+                    trapped += 1
+
+        return trapped

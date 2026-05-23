@@ -2465,3 +2465,36 @@ class Solution:
                     trapped += 1
 
         return trapped
+
+# Transform to Sum Tree
+# Structure for Tree Node
+
+
+class Node:
+    def __init__(self, val):
+        self.data = val
+        self.left = None
+        self.right = None
+
+
+class Solution:
+    def toSumTree(self, root):
+        # Helper function to recursively transform
+        def transform(node):
+            if node is None:
+                return 0
+
+            # Recursively transform left and right subtrees
+            left_sum = transform(node.left)
+            right_sum = transform(node.right)
+
+            # Store original value before updating
+            old_val = node.data
+
+            # Update current node's value
+            node.data = left_sum + right_sum
+
+            # Return sum including original value (for parent's calculation)
+            return node.data + old_val
+
+        transform(root)

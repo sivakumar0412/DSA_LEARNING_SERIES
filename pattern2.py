@@ -2498,3 +2498,15 @@ class Solution:
             return node.data + old_val
 
         transform(root)
+
+# Elements in the Range
+class Solution:
+    def checkElements(self, start, end, arr):
+        # Convert array to set for fast lookup
+        arr_set = set(arr)
+        
+        # Check if every element in range [start, end] exists in arr_set
+        for num in range(start, end + 1):
+            if num not in arr_set:
+                return False
+        return True

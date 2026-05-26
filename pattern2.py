@@ -2510,3 +2510,31 @@ class Solution:
             if num not in arr_set:
                 return False
         return True
+
+# Minimum Toggle to Partition
+class Solution:
+    def minToggle(self, arr):
+        n = len(arr)
+        
+        total_zeros = arr.count(0)
+        ones_left = 0
+        zeros_right = total_zeros
+        min_toggles = float('inf')
+        
+        # Case 1: partition before first element (all 1s)
+        min_toggles = min(min_toggles, zeros_right)
+        
+        for num in arr:
+            # Update counts
+            if num == 1:
+                ones_left += 1
+            else:
+                zeros_right -= 1
+            
+            # Case 2: partition after this element
+            min_toggles = min(min_toggles, ones_left + zeros_right)
+        
+        # Case 3: partition after last element (all 0s)
+        min_toggles = min(min_toggles, ones_left)
+        
+        return min_toggles

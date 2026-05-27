@@ -2538,3 +2538,24 @@ class Solution:
         min_toggles = min(min_toggles, ones_left)
         
         return min_toggles
+
+# Wifi Range
+class Solution:
+    def wifiRange(self, s, x):
+        n = len(s)
+        diff = [0] * (n + 1)
+        
+        for i in range(n):
+            if s[i] == '1':
+                left = max(0, i - x)
+                right = min(n, i + x + 1)
+                diff[left] += 1
+                diff[right] -= 1
+        
+        coverage = 0
+        for i in range(n):
+            coverage += diff[i]
+            if coverage == 0:  # room not covered
+                return False
+        
+        return True

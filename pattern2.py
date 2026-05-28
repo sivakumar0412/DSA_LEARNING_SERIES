@@ -2559,3 +2559,39 @@ class Solution:
                 return False
         
         return True
+
+# Vertical Sum
+# Structure of binary tree node
+
+
+class Node:
+    def __init__(self, item):
+        self.data = item
+        self.left = None
+        self.right = None
+
+
+class Solution:
+    def verticalSum(self, root):
+        if not root:
+            return []
+
+        # Dictionary to store sums by horizontal distance
+        hd_map = {}
+
+        # Helper function for DFS traversal
+        def dfs(node, hd):
+            if not node:
+                return
+            # Add node value to its horizontal distance sum
+            hd_map[hd] = hd_map.get(hd, 0) + node.data
+            # Recurse left and right
+            dfs(node.left, hd - 1)
+            dfs(node.right, hd + 1)
+
+        # Start DFS from root with hd = 0
+        dfs(root, 0)
+
+        # Collect results sorted by horizontal distance
+        result = [hd_map[hd] for hd in sorted(hd_map.keys())]
+        return result

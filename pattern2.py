@@ -2595,3 +2595,30 @@ class Solution:
         # Collect results sorted by horizontal distance
         result = [hd_map[hd] for hd in sorted(hd_map.keys())]
         return result
+
+# Count Sorted Digit Groupings
+
+class Solution:
+    def validGroups(self, s: str) -> int:
+        from functools import lru_cache
+
+        # Helper to compute digit sum of substring
+        def digit_sum(sub: str) -> int:
+            return sum(int(ch) for ch in sub)
+
+        @lru_cache(None)
+        def dfs(index: int, prev_sum: int) -> int:
+            # If we've consumed the whole string, that's one valid grouping
+            if index == len(s):
+                return 1
+
+            total = 0
+            # Try all possible splits starting at index
+            curr_sum = 0
+            for j in range(index, len(s)):
+                curr_sum += int(s[j])  # incremental sum
+                if curr_sum >= prev_sum:
+                    total += dfs(j + 1, curr_sum)
+            return total
+
+        return dfs(0, 0)

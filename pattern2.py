@@ -2622,3 +2622,25 @@ class Solution:
             return total
 
         return dfs(0, 0)
+
+# Replace with XOR of Adjacent
+class Solution:
+    def replaceElements(self, arr):
+        n = len(arr)
+        if n < 2:
+            return arr  # edge case, though constraints say n >= 2
+
+        # Copy original array to avoid overwriting
+        old = arr[:]
+
+        # First element
+        arr[0] = old[0] ^ old[1]
+
+        # Middle elements
+        for i in range(1, n - 1):
+            arr[i] = old[i - 1] ^ old[i + 1]
+
+        # Last element
+        arr[n - 1] = old[n - 2] ^ old[n - 1]
+
+        return arr

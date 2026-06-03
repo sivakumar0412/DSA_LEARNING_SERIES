@@ -2660,3 +2660,30 @@ class Solution:
                 i -= 1
 
         return ans
+
+# Subarray Frequency Count Queries
+from bisect import bisect_left, bisect_right
+
+class Solution:
+    def freqInRange(self, arr, queries):
+        # Step 1: Preprocess positions of each element
+        pos = {}
+        for i, val in enumerate(arr):
+            if val not in pos:
+                pos[val] = []
+            pos[val].append(i)
+        
+        # Step 2: Answer queries
+        result = []
+        for l, r, x in queries:
+            if x not in pos:
+                result.append(0)
+                continue
+            
+            indices = pos[x]
+            # Find count of indices in [l, r]
+            left = bisect_left(indices, l)
+            right = bisect_right(indices, r)
+            result.append(right - left)
+        
+        return result

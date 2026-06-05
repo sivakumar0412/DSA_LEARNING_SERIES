@@ -2687,3 +2687,34 @@ class Solution:
             result.append(right - left)
         
         return result
+
+
+# Lexicographically smallest after removing k
+
+class Solution:
+    def lexicographicallySmallest(self, s, k):
+        n = len(s)
+
+        # Check if n is power of 2
+        if (n & (n - 1)) == 0:
+            k //= 2
+        else:
+            k *= 2
+
+        # If removal not possible
+        if k >= n or n - k == 0:
+            return -1
+
+        stack = []
+        for ch in s:
+            while stack and k > 0 and stack[-1] > ch:
+                stack.pop()
+                k -= 1
+            stack.append(ch)
+
+        # Remove remaining k from end
+        if k > 0:
+            stack = stack[:-k]
+
+        return "".join(stack)
+

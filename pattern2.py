@@ -2718,3 +2718,15 @@ class Solution:
 
         return "".join(stack)
 
+# Non-Attacking Black and White Knights
+
+class Solution:
+    def numOfWays(self, n: int, m: int) -> int:
+        total = n * m * (n * m - 1)
+        attacks = 0
+        if n > 1 and m > 2:
+            attacks += 4 * (n - 1) * (m - 2)
+        if n > 2 and m > 1:
+            attacks += 4 * (n - 2) * (m - 1)
+        return total - attacks
+

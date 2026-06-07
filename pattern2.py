@@ -2730,3 +2730,13 @@ class Solution:
             attacks += 4 * (n - 2) * (m - 1)
         return total - attacks
 
+# Finding Profession
+
+
+class Solution:
+    def profession(self, level, pos):
+        # Count set bits in (pos - 1)
+        flips = bin(pos - 1).count('1')
+
+        # If flips are even → Engineer, else Doctor
+        return "Engineer" if flips % 2 == 0 else "Doctor"

@@ -2740,3 +2740,40 @@ class Solution:
 
         # If flips are even → Engineer, else Doctor
         return "Engineer" if flips % 2 == 0 else "Doctor"
+
+# Delete Nodes with Greater on Right
+# Structure of linked list node
+class Node:
+    def __init__(self, x):
+        self.data = x
+        self.next = None
+
+class Solution:
+    def reverse(self, head):
+        prev = None
+        curr = head
+        while curr:
+            nxt = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nxt
+        return prev
+    
+    def compute(self, head):
+        # Step 1: Reverse the list
+        head = self.reverse(head)
+        
+        # Step 2: Traverse and delete nodes
+        max_val = head.data
+        curr = head
+        while curr and curr.next:
+            if curr.next.data < max_val:
+                # delete the node
+                curr.next = curr.next.next
+            else:
+                curr = curr.next
+                max_val = curr.data
+        
+        # Step 3: Reverse again to restore order
+        head = self.reverse(head)
+        return head

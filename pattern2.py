@@ -2810,3 +2810,26 @@ class Solution:
                 ans += 1
 
         return ans
+
+# Equal Point in Brackets
+class Solution:
+    def findIndex(self, s: str) -> int:
+        n = len(s)
+        
+        # Step 1: Count total closing brackets
+        close_count = s.count(')')
+        open_count = 0
+        
+        # Step 2: Traverse string
+        for k in range(n + 1):  # include split at n
+            if open_count == close_count:
+                return k
+            
+            # Step 3: Update counters
+            if k < n:
+                if s[k] == '(':
+                    open_count += 1
+                else:
+                    close_count -= 1
+        
+        return -1  # if no equal point found

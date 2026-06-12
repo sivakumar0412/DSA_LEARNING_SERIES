@@ -2833,3 +2833,28 @@ class Solution:
                     close_count -= 1
         
         return -1  # if no equal point found
+
+# Check Repeated Substring with K Replacements
+
+
+class Solution:
+    def kSubstr(self, s: str, k: int) -> bool:
+        # If length not divisible by k, impossible
+        if len(s) % k != 0:
+            return False
+
+        # Split into chunks of size k
+        chunks = [s[i:i+k] for i in range(0, len(s), k)]
+
+        # Count frequency of each chunk
+        from collections import Counter
+        freq = Counter(chunks)
+
+        # Find the most common chunk
+        most_common_chunk, count = freq.most_common(1)[0]
+
+        # Number of chunks that differ
+        diff_chunks = len(chunks) - count
+
+        # Valid if at most one chunk differs
+        return diff_chunks <= 1

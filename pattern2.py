@@ -2877,3 +2877,28 @@ class Solution:
         numerator = fact[2*n]
         denominator = (fact[n] * fact[n]) % MOD
         return (numerator * modinv(denominator)) % MOD
+
+
+# Exit Point in a Matrix
+class Solution:
+    def exitPoint(self, mat):
+        n, m = len(mat), len(mat[0])
+        
+        # directions: right, down, left, up
+        di, dj = 0, 1   # start moving right
+        i, j = 0, 0
+        
+        while 0 <= i < n and 0 <= j < m:
+            if mat[i][j] == 1:
+                mat[i][j] = 0
+                # turn right (clockwise)
+                di, dj = dj, -di
+            
+            i += di
+            j += dj
+        
+        # step back to last valid cell
+        i -= di
+        j -= dj
+        
+        return [i, j]

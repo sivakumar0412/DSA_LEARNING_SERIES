@@ -2902,3 +2902,26 @@ class Solution:
         j -= dj
         
         return [i, j]
+
+# Minimum Cost to Fill Given Weight
+
+
+class Solution:
+    def minimumCost(self, cost, w):
+        # Initialize DP array
+        dp = [float('inf')] * (w + 1)
+        dp[0] = 0  # base case
+
+        # Iterate over all packet sizes
+        for i in range(len(cost)):
+            if cost[i] == -1:  # skip unavailable packets
+                continue
+            packet_size = i + 1
+            packet_cost = cost[i]
+
+            # Update dp for all weights >= packet_size
+            for x in range(packet_size, w + 1):
+                if dp[x - packet_size] != float('inf'):
+                    dp[x] = min(dp[x], dp[x - packet_size] + packet_cost)
+
+        return -1 if dp[w] == float('inf') else dp[w]

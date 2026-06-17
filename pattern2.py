@@ -2925,3 +2925,22 @@ class Solution:
                     dp[x] = min(dp[x], dp[x - packet_size] + packet_cost)
 
         return -1 if dp[w] == float('inf') else dp[w]
+
+
+# Cut rope to maximise product
+class Solution:
+    def maxProduct(self, n):
+        # Base cases
+        if n == 2:
+            return 1
+        if n == 3:
+            return 2
+
+        product = 1
+        # Cut as many 3's as possible
+        while n > 4:
+            product *= 3
+            n -= 3
+
+        product *= n
+        return product

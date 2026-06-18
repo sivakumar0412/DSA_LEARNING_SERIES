@@ -2944,3 +2944,43 @@ class Solution:
 
         product *= n
         return product
+
+
+# Coverage of all Zeros in a Binary Matrix
+class Solution:
+    def findCoverage(self, mat):
+        n, m = len(mat), len(mat[0])
+        total_coverage = 0
+
+        for i in range(n):
+            for j in range(m):
+                if mat[i][j] == 0:
+                    coverage = 0
+
+                    # Check left
+                    for k in range(j-1, -1, -1):
+                        if mat[i][k] == 1:
+                            coverage += 1
+                            break
+
+                    # Check right
+                    for k in range(j+1, m):
+                        if mat[i][k] == 1:
+                            coverage += 1
+                            break
+
+                    # Check up
+                    for k in range(i-1, -1, -1):
+                        if mat[k][j] == 1:
+                            coverage += 1
+                            break
+
+                    # Check down
+                    for k in range(i+1, n):
+                        if mat[k][j] == 1:
+                            coverage += 1
+                            break
+
+                    total_coverage += coverage
+
+        return total_coverage

@@ -2984,3 +2984,31 @@ class Solution:
                     total_coverage += coverage
 
         return total_coverage
+
+# Equalize All Prefix Sums
+
+
+class Solution:
+    def optimalArray(self, arr):
+        n = len(arr)
+        prefix_sum = [0] * n
+        prefix_sum[0] = arr[0]
+
+        # build prefix sums
+        for i in range(1, n):
+            prefix_sum[i] = prefix_sum[i-1] + arr[i]
+
+        result = []
+        for i in range(n):
+            m = i // 2
+            median = arr[m]
+
+            # left side cost
+            left_cost = median * (m+1) - prefix_sum[m]
+
+            # right side cost
+            right_cost = (prefix_sum[i] - prefix_sum[m]) - median * (i-m)
+
+            result.append(left_cost + right_cost)
+
+        return result

@@ -3012,3 +3012,42 @@ class Solution:
             result.append(left_cost + right_cost)
 
         return result
+
+# Last Digit of a^b
+class Solution:
+    def getLastDigit(self, a, b):
+        # Step 1: Get last digit of a
+        last_digit = int(a[-1])
+        
+        # Step 2: Cycles of last digits
+        cycles = {
+            0: [0],
+            1: [1],
+            2: [2, 4, 8, 6],
+            3: [3, 9, 7, 1],
+            4: [4, 6],
+            5: [5],
+            6: [6],
+            7: [7, 9, 3, 1],
+            8: [8, 4, 2, 6],
+            9: [9, 1]
+        }
+        
+        cycle = cycles[last_digit]
+        cycle_len = len(cycle)
+        
+        # Step 3: Handle b = "0"
+        if b == "0":
+            return 1 if a != "0" else 0
+        
+        # Step 4: Compute b mod cycle_len
+        # Since b can be huge, compute modulo directly from string
+        b_mod = 0
+        for digit in b:
+            b_mod = (b_mod * 10 + int(digit)) % cycle_len
+        
+        # Step 5: Adjust index (0 means last element in cycle)
+        if b_mod == 0:
+            return cycle[-1]
+        else:
+            return cycle[b_mod - 1]

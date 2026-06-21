@@ -3051,3 +3051,26 @@ class Solution:
             return cycle[-1]
         else:
             return cycle[b_mod - 1]
+
+# Choose and Swap
+class Solution:
+    def chooseSwap(self, s: str) -> str:
+        # Step 1: Track first occurrence of each character
+        first_occurrence = {}
+        for i, ch in enumerate(s):
+            if ch not in first_occurrence:
+                first_occurrence[ch] = i
+
+        # Step 2: Traverse string and check for possible beneficial swap
+        for i, ch in enumerate(s):
+            for smaller in sorted(first_occurrence.keys()):
+                if smaller < ch and first_occurrence[smaller] > i:
+                    # Step 3: Perform swap
+                    s = list(s)
+                    for j in range(len(s)):
+                        if s[j] == ch:
+                            s[j] = smaller
+                        elif s[j] == smaller:
+                            s[j] = ch
+                    return "".join(s)
+        return s

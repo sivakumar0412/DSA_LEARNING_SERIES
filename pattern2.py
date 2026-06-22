@@ -3074,3 +3074,26 @@ class Solution:
                             s[j] = ch
                     return "".join(s)
         return s
+
+
+# Maximum Area Between Bars
+class Solution:
+    def maxArea(self, height):
+        n = len(height)
+        left, right = 0, n - 1
+        max_area = 0
+
+        while left < right:
+            # width is number of bars between left and right
+            width = right - left - 1
+            # height is min of the two bars
+            curr_area = min(height[left], height[right]) * width
+            max_area = max(max_area, curr_area)
+
+            # move the pointer with smaller height
+            if height[left] < height[right]:
+                left += 1
+            else:
+                right -= 1
+
+        return max_area

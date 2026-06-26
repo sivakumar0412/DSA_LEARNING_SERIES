@@ -3099,6 +3099,8 @@ class Solution:
         return max_area
 
 # Rat Maze With Multiple Jumps
+
+
 class Solution:
 
     def ratmaze(self, mat, i, j, ans):
@@ -3134,3 +3136,28 @@ class Solution:
                 return ans
 
         return [[-1]]
+
+# Count Matching Subsequences
+
+
+class Solution:
+    def countWays(self, s1: str, s2: str) -> int:
+        MOD = 10**9 + 7
+        n, m = len(s1), len(s2)
+
+        # DP table
+        dp = [[0] * (m + 1) for _ in range(n + 1)]
+
+        # Base case: empty s2
+        for i in range(n + 1):
+            dp[i][0] = 1
+
+        # Fill DP table
+        for i in range(1, n + 1):
+            for j in range(1, m + 1):
+                if s1[i-1] == s2[j-1]:
+                    dp[i][j] = (dp[i-1][j-1] + dp[i-1][j]) % MOD
+                else:
+                    dp[i][j] = dp[i-1][j] % MOD
+
+        return dp[n][m]

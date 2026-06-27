@@ -3161,3 +3161,29 @@ class Solution:
                     dp[i][j] = dp[i-1][j] % MOD
 
         return dp[n][m]
+
+# Ways to Tile the Floor
+
+
+class Solution:
+    def countWays(self, n, m):
+        MOD = 10**9 + 7
+
+        # Case 1: n < m → only horizontal tiling possible
+        if n < m:
+            return 1
+
+        # Case 2: n == m → either all horizontal or all vertical
+        if n == m:
+            return 2
+
+        # Case 3: n > m → use DP
+        dp = [0] * (n+1)
+        for i in range(m):
+            dp[i] = 1
+        dp[m] = 2
+
+        for i in range(m+1, n+1):
+            dp[i] = (dp[i-1] + dp[i-m]) % MOD
+
+        return dp[n]

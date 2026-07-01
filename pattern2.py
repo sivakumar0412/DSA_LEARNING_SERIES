@@ -3204,3 +3204,29 @@ class Solution:
                 )
 
         return dp[n][m]
+
+# Max Subarray Sum by Removing At Most One
+class Solution:
+    def maxSumSubarray(self, arr):
+        n = len(arr)
+        
+        # Forward Kadane
+        fw = [0] * n
+        fw[0] = arr[0]
+        for i in range(1, n):
+            fw[i] = max(arr[i], fw[i-1] + arr[i])
+        
+        # Backward Kadane
+        bw = [0] * n
+        bw[n-1] = arr[n-1]
+        for i in range(n-2, -1, -1):
+            bw[i] = max(arr[i], bw[i+1] + arr[i])
+        
+        # Max without deletion
+        max_sum = max(fw)
+        
+        # Max with one deletion
+        for i in range(1, n-1):
+            max_sum = max(max_sum, fw[i-1] + bw[i+1])
+        
+        return max_sum

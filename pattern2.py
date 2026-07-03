@@ -3230,3 +3230,42 @@ class Solution:
             max_sum = max(max_sum, fw[i-1] + bw[i+1])
         
         return max_sum
+
+# Ways to Increase LCS by One
+class Solution:
+    def waysToIncreaseLCSBy1(self, s1, s2):
+        n1, n2 = len(s1), len(s2)
+
+        # Step 1: Prefix LCS
+        prefix = [[0]*(n2+1) for _ in range(n1+1)]
+        for i in range(1, n1+1):
+            for j in range(1, n2+1):
+                if s1[i-1] == s2[j-1]:
+                    prefix[i][j] = prefix[i-1][j-1] + 1
+                else:
+                    prefix[i][j] = max(prefix[i-1][j], prefix[i][j-1])
+
+        L = prefix[n1][n2]  # current LCS length
+
+        # Step 2: Suffix LCS
+        suffix = [[0]*(n2+1) for _ in range(n1+1)]
+        for i in range(n1-1, -1, -1):
+            for j in range(n2-1, -1, -1):
+                if s1[i] == s2[j]:
+                    suffix[i][j] = suffix[i+1][j+1] + 1
+                else:
+                    suffix[i][j] = max(suffix[i+1][j], suffix[i][j+1])
+
+        # Step 3: Try insertions
+        ways = 0
+        for pos in range(n1+1):  # insertion positions
+            for c in set(s2):    # only consider chars from s2
+                newLCS = 0
+                for j in range(n2):
+                    if s2[j] == c:
+                        candidate = prefix[pos][j] + 1 + suffix[pos][j+1]
+                        newLCS = max(newLCS, candidate)
+                if newLCS == L + 1:
+                    ways += 1
+
+        return ways

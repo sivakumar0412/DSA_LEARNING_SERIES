@@ -3275,39 +3275,70 @@ class Solution:
 class Solution:
     def countSubstring(self, s):
         n = len(s)
-        
+
         # Step 1: transform string into +1/-1
         arr = [1 if ch == '1' else -1 for ch in s]
-        
+
         # Step 2: prefix sums
         prefix = [0]
         for num in arr:
             prefix.append(prefix[-1] + num)
-        
+
         # Step 3: coordinate compression
         sorted_vals = sorted(set(prefix))
         rank = {val: i+1 for i, val in enumerate(sorted_vals)}  # 1-indexed
-        
+
         # Step 4: Fenwick Tree
         def update(bit, i):
             while i < len(bit):
                 bit[i] += 1
                 i += i & -i
-        
+
         def query(bit, i):
             res = 0
             while i > 0:
                 res += bit[i]
                 i -= i & -i
             return res
-        
+
         bit = [0] * (len(sorted_vals) + 2)
         ans = 0
-        
+
         for val in prefix:
             r = rank[val]
             # count how many prefix sums < current
             ans += query(bit, r-1)
             update(bit, r)
-        
+
         return ans
+
+# Max Sum Path in Two Arrays
+class Solution:
+    def maxPathSum(self, a, b):
+        i, j = 0, 0
+        sumA, sumB, result = 0, 0, 0
+        n, m = len(a), len(b)
+
+        while i < n and j < m:
+            if a[i] < b[j]:
+                sumA += a[i]
+                i += 1
+            elif b[j] < a[i]:
+                sumB += b[j]
+                j += 1
+            else:  # common element
+                result += max(sumA, sumB) + a[i]
+                sumA, sumB = 0, 0
+                i += 1
+                j += 1
+
+        # Add remaining elements
+        while i < n:
+            sumA += a[i]
+            i += 1
+        while j < m:
+            sumB += b[j]
+            j += 1
+
+        result += max(sumA, sumB)
+        return result

@@ -3342,3 +3342,26 @@ class Solution:
 
         result += max(sumA, sumB)
         return result
+
+# Largest Unblocked Submatrix
+class Solution:
+    def largestArea(self, n, m, arr):
+        # Collect blocked rows and columns
+        blocked_rows = sorted([r for r, c in arr])
+        blocked_cols = sorted([c for r, c in arr])
+        
+        # Function to compute max gap
+        def max_gap(blocked, total):
+            max_gap = 0
+            prev = 0  # before first row/col
+            for b in blocked:
+                max_gap = max(max_gap, b - prev - 1)
+                prev = b
+            # after last blocked
+            max_gap = max(max_gap, total - prev)
+            return max_gap
+        
+        max_row_gap = max_gap(blocked_rows, n)
+        max_col_gap = max_gap(blocked_cols, m)
+        
+        return max_row_gap * max_col_gap

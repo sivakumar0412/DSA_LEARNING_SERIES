@@ -3365,3 +3365,40 @@ class Solution:
         max_col_gap = max_gap(blocked_cols, m)
         
         return max_row_gap * max_col_gap
+
+# Towers Reaching Both Stations
+class Solution:
+    def countCoordinates(self, mat):
+        n, m = len(mat), len(mat[0])
+        
+        def bfs(starts):
+            visited = [[False]*m for _ in range(n)]
+            from collections import deque
+            q = deque(starts)
+            for x, y in starts:
+                visited[x][y] = True
+            while q:
+                i, j = q.popleft()
+                for dx, dy in [(1,0),(-1,0),(0,1),(0,-1)]:
+                    ni, nj = i+dx, j+dy
+                    if 0 <= ni < n and 0 <= nj < m and not visited[ni][nj]:
+                        if mat[ni][nj] >= mat[i][j]:  # reverse condition
+                            visited[ni][nj] = True
+                            q.append((ni,nj))
+            return visited
+        
+        # Station P: top row + left column
+        startsP = [(0,j) for j in range(m)] + [(i,0) for i in range(n)]
+        reachP = bfs(startsP)
+        
+        # Station Q: bottom row + right column
+        startsQ = [(n-1,j) for j in range(m)] + [(i,m-1) for i in range(n)]
+        reachQ = bfs(startsQ)
+        
+        # Count intersections
+        count = 0
+        for i in range(n):
+            for j in range(m):
+                if reachP[i][j] and reachQ[i][j]:
+                    count += 1
+        return count

@@ -3402,3 +3402,15 @@ class Solution:
                 if reachP[i][j] and reachQ[i][j]:
                     count += 1
         return count
+# Ways to Express as Sum of Consecutives
+
+
+class Solution:
+    def getCount(self, n: int) -> int:
+        count = 0
+        m = 2
+        while m * (m - 1) // 2 < n:
+            if (n - m * (m - 1) // 2) % m == 0:
+                count += 1
+            m += 1
+        return count

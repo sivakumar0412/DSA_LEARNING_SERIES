@@ -3414,3 +3414,30 @@ class Solution:
                 count += 1
             m += 1
         return count
+
+
+# Max Amount by Selling K Tickets
+
+MOD = 10**9 + 7
+
+
+class Solution:
+    def maxAmount(self, arr, k):
+        # Convert arr into a max-heap (store negatives for Python's min-heap)
+        heap = [-x for x in arr]
+        heapq.heapify(heap)
+
+        amount = 0
+
+        while k > 0 and heap:
+            # Get max tickets available
+            top = -heapq.heappop(heap)
+            amount = (amount + top) % MOD
+
+            # Seller still has tickets left
+            if top - 1 > 0:
+                heapq.heappush(heap, -(top - 1))
+
+            k -= 1
+
+        return amount

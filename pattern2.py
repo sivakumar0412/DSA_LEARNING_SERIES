@@ -3441,3 +3441,36 @@ class Solution:
             k -= 1
 
         return amount
+
+# Rearrange the Array
+import math
+
+MOD = 10**9 + 7
+
+class Solution:
+    def minOperations(self, b):
+        n = len(b)
+        visited = [False] * (n + 1)
+        cycles = []
+
+        # Step 1: Find cycle lengths
+        for i in range(1, n + 1):
+            if not visited[i]:
+                length = 0
+                j = i
+                while not visited[j]:
+                    visited[j] = True
+                    j = b[j - 1]   # b is 1-based indexing
+                    length += 1
+                cycles.append(length)
+
+        # Step 2: Compute LCM of cycle lengths modulo MOD
+        def lcm(a, b):
+            return a * b // math.gcd(a, b)
+
+        ans = 1
+        for c in cycles:
+            ans = lcm(ans, c)
+            ans %= MOD   # keep result within MOD
+
+        return ans

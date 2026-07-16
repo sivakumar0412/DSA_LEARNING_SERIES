@@ -3502,3 +3502,28 @@ class Solution:
             ans = max(ans, inc[i] + dec[i] - 1)
 
         return ans
+
+
+# Numbers with Given Digit Sum
+class Solution:
+    def countWays(self, n, total_sum):
+        # If sum is impossible for n digits
+        if total_sum < 1 or total_sum > 9 * n:
+            return -1
+
+        # Initialize DP table
+        dp = [[0] * (total_sum + 1) for _ in range(n + 1)]
+
+        # Base case: 1-digit numbers (no leading zero)
+        for d in range(1, 10):
+            if d <= total_sum:
+                dp[1][d] = 1
+
+        # Fill DP table
+        for i in range(2, n + 1):  # number of digits
+            for s in range(total_sum + 1):  # target sum
+                for d in range(10):  # digit choice
+                    if s - d >= 0:
+                        dp[i][s] += dp[i - 1][s - d]
+
+        return dp[n][total_sum] if dp[n][total_sum] > 0 else -1

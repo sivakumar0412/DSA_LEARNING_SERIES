@@ -3527,3 +3527,39 @@ class Solution:
                         dp[i][s] += dp[i - 1][s - d]
 
         return dp[n][total_sum] if dp[n][total_sum] > 0 else -1
+
+# Shortest Unique Prefix for Every Word
+
+
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.freq = 0
+
+
+class Solution:
+    def findPrefixes(self, arr):
+        # Step 1: Build Trie
+        root = TrieNode()
+
+        for word in arr:
+            node = root
+            for ch in word:
+                if ch not in node.children:
+                    node.children[ch] = TrieNode()
+                node = node.children[ch]
+                node.freq += 1
+
+        # Step 2: Find shortest unique prefix for each word
+        result = []
+        for word in arr:
+            node = root
+            prefix = ""
+            for ch in word:
+                prefix += ch
+                node = node.children[ch]
+                if node.freq == 1:  # Unique prefix found
+                    break
+            result.append(prefix)
+
+        return result

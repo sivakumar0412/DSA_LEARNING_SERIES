@@ -3563,3 +3563,31 @@ class Solution:
             result.append(prefix)
 
         return result
+
+# Max Sum Square Sub-Matrix of Size k
+class Solution:
+    def maximumSum(self, mat, k):
+        n = len(mat)
+        
+        # Step 1: Build prefix sum matrix
+        ps = [[0] * (n + 1) for _ in range(n + 1)]
+        
+        for i in range(1, n + 1):
+            for j in range(1, n + 1):
+                ps[i][j] = (mat[i-1][j-1] +
+                            ps[i-1][j] +
+                            ps[i][j-1] -
+                            ps[i-1][j-1])
+        
+        # Step 2: Find max sum of k x k sub-matrix
+        max_sum = float('-inf')
+        
+        for i in range(k, n + 1):
+            for j in range(k, n + 1):
+                total = (ps[i][j] -
+                         ps[i-k][j] -
+                         ps[i][j-k] +
+                         ps[i-k][j-k])
+                max_sum = max(max_sum, total)
+        
+        return max_sum

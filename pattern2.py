@@ -3591,3 +3591,44 @@ class Solution:
                 max_sum = max(max_sum, total)
         
         return max_sum
+
+# Construct a Full Binary Tree
+# Structure of Binary Tree Node
+
+
+class Node:
+    def __init__(self, val):
+        self.data = val
+        self.left = None
+        self.right = None
+
+
+class Solution:
+    def constructBinaryTree(self, pre, preMirror):
+        self.preIndex = 0
+        n = len(pre)
+
+        # Helper recursive function
+        def build(l, r):
+            if self.preIndex >= n or l > r:
+                return None
+
+            # Create current node
+            root = Node(pre[self.preIndex])
+            self.preIndex += 1
+
+            # If leaf node
+            if l == r:
+                return root
+
+            # Find next element in pre[] inside preMirror[]
+            next_val = pre[self.preIndex]
+            idx = preMirror.index(next_val, l, r+1)
+
+            # Build left and right subtrees
+            root.left = build(idx, r)
+            root.right = build(l+1, idx-1)
+
+            return root
+
+        return build(0, n-1)

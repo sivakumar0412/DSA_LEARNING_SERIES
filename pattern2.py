@@ -3632,3 +3632,28 @@ class Solution:
             return root
 
         return build(0, n-1)
+
+
+# Maximum Subset XOR
+class Solution:
+    def maxSubsetXOR(self, arr):
+        # Maximum bits needed (since arr[i] ≤ 10^6, ~20 bits)
+        MAX_BITS = 20
+        basis = [0] * (MAX_BITS + 1)
+
+        # Step 1: Build basis
+        for num in arr:
+            for bit in range(MAX_BITS, -1, -1):
+                if (num >> bit) & 1:
+                    if basis[bit] == 0:
+                        basis[bit] = num
+                        break
+                    num ^= basis[bit]
+
+        # Step 2: Compute maximum XOR
+        res = 0
+        for bit in range(MAX_BITS, -1, -1):
+            if basis[bit] and (res ^ basis[bit]) > res:
+                res ^= basis[bit]
+
+        return res

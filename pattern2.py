@@ -3657,3 +3657,37 @@ class Solution:
                 res ^= basis[bit]
 
         return res
+
+# Subset Sum on Generated Sequence
+class Solution:
+    def isPossible(self, arr, s, x):
+        if x == 0:
+            return True
+
+        if s > x:
+            return False
+
+        # Generate only values <= x
+        nums = [s]
+        total = s
+
+        for a in arr:
+            value = total + a
+
+            if value > x:
+                break
+
+            nums.append(value)
+            total += value
+
+        # Greedy subset sum
+        remaining = x
+
+        for value in reversed(nums):
+            if value <= remaining:
+                remaining -= value
+
+                if remaining == 0:
+                    return True
+
+        return False

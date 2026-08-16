@@ -3659,6 +3659,8 @@ class Solution:
         return res
 
 # Subset Sum on Generated Sequence
+
+
 class Solution:
     def isPossible(self, arr, s, x):
         if x == 0:
@@ -3691,3 +3693,42 @@ class Solution:
                     return True
 
         return False
+
+# Min Product Subset
+class Solution:
+    def minProd(self, arr):
+        # code here
+        negatives = []
+        positives = []
+        zero = False
+
+        for x in arr:
+            if x < 0:
+                negatives.append(x)
+            elif x > 0:
+                positives.append(x)
+            else:
+                zero = True
+
+        # No negative numbers
+        if not negatives:
+            if zero:
+                return 0
+            return min(positives)
+
+        # Make the product negative.
+        # If number of negatives is even, remove the negative
+        # closest to zero.
+        if len(negatives) % 2 == 0:
+            remove = max(negatives)
+            negatives.remove(remove)
+
+        product = 1
+
+        for x in negatives:
+            product *= x
+
+        for x in positives:
+            product *= x
+
+        return product

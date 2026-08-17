@@ -3732,3 +3732,56 @@ class Solution:
             product *= x
 
         return product
+
+# Snake and Ladder Problem
+from collections import deque
+
+class Solution:
+    def minThrows(self, n, lad, sn):
+        N = n * n
+
+        # Already at the destination
+        if N == 1:
+            return 0
+
+        # board[x] = destination if x has a snake/ladder
+        board = [0] * (N + 1)
+
+        for i in range(0, len(lad), 2):
+            start = lad[i]
+            end = lad[i + 1]
+            board[start] = end
+
+        for i in range(0, len(sn), 2):
+            start = sn[i]
+            end = sn[i + 1]
+            board[start] = end
+
+        # BFS
+        dist = [-1] * (N + 1)
+        dist[1] = 0
+
+        q = deque([1])
+
+        while q:
+            curr = q.popleft()
+
+            for dice in range(1, 7):
+                nxt = curr + dice
+
+                if nxt > N:
+                    break
+
+                # Take snake or ladder immediately
+                if board[nxt] != 0:
+                    nxt = board[nxt]
+
+                if dist[nxt] == -1:
+                    dist[nxt] = dist[curr] + 1
+
+                    if nxt == N:
+                        return dist[nxt]
+
+                    q.append(nxt)
+
+        return -1

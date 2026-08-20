@@ -3785,3 +3785,38 @@ class Solution:
                     q.append(nxt)
 
         return -1
+
+# Node and Ancestor Max Diff
+''' Structure of Binary Tree Node
+class Node:
+    def __init__(self,val):
+        self.data = val
+        self.left = None
+        self.right = None
+'''
+class Solution:
+    def maxDiff(self, root):
+        # code here
+        ans = float('-inf')
+
+        # (node, maximum ancestor value)
+        stack = [(root, root.data)]
+
+        while stack:
+            node, max_ancestor = stack.pop()
+
+            if node.left:
+                # Difference between an ancestor and this child
+                ans = max(ans, max_ancestor - node.left.data)
+
+                # This child can become an ancestor of its children
+                new_max = max(max_ancestor, node.left.data)
+                stack.append((node.left, new_max))
+
+            if node.right:
+                ans = max(ans, max_ancestor - node.right.data)
+
+                new_max = max(max_ancestor, node.right.data)
+                stack.append((node.right, new_max))
+
+        return ans

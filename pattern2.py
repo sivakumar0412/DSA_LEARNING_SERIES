@@ -3820,3 +3820,30 @@ class Solution:
                 stack.append((node.right, new_max))
 
         return ans
+
+
+# Transform String
+class Solution:
+    def transform(self, s1, s2): 
+        #code here
+        if len(s1)!=len(s2):
+            return -1
+        freq ={}
+        for ch in s1:
+            freq[ch]=freq.get(ch,0)+1
+        for ch in s2:
+            freq[ch]=freq.get(ch,0)-1
+        for count in freq.values():
+            if count!=0:
+                return -1
+        i=len(s1)-1
+        j=len(s2)-1
+        operations=0
+        while i>=0:
+            if s1[i]==s2[j]:
+                i-=1
+                j-=1
+            else:
+                operations +=1
+                i-=1
+        return operations

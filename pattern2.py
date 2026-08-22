@@ -3847,3 +3847,67 @@ class Solution:
                 operations +=1
                 i-=1
         return operations
+
+# Number of Turns in Binary Tree
+class Solution:
+    def numberOfTurns(self, root, p, q):
+        # code here
+        def find_path(node, target, path):
+            if node is None:
+                return False
+
+            if node.data == target:
+                return True
+
+            path.append(0)
+            if find_path(node.left, target, path):
+                return True
+            path.pop()
+
+            path.append(1)
+            if find_path(node.right, target, path):
+                return True
+            path.pop()
+
+            return False
+
+        path_p = []
+        path_q = []
+
+        if not find_path(root, p, path_p):
+            return -1
+
+        if not find_path(root, q, path_q):
+            return -1
+
+        # Find the LCA by comparing root-to-node paths
+        i = 0
+        limit = min(len(path_p), len(path_q))
+
+        while i < limit and path_p[i] == path_q[i]:
+            i += 1
+
+        # Remove the common root -> LCA part
+        p_path = path_p[i:]
+        q_path = path_q[i:]
+
+        turns_p = 0
+        turns_q = 0
+
+        for j in range(1, len(p_path)):
+            if p_path[j] != p_path[j - 1]:
+                turns_p += 1
+
+        for j in range(1, len(q_path)):
+            if q_path[j] != q_path[j - 1]:
+                turns_q += 1
+
+        # LCA is one of p or q
+        if not p_path or not q_path:
+            turns = turns_p + turns_q
+            return turns if turns > 0 else -1
+
+        # p and q are in different subtrees of LCA
+        turns = turns_p + turns_q + 1
+
+        return turns

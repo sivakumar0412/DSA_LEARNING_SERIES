@@ -3849,6 +3849,8 @@ class Solution:
         return operations
 
 # Number of Turns in Binary Tree
+
+
 class Solution:
     def numberOfTurns(self, root, p, q):
         # code here
@@ -3911,3 +3913,26 @@ class Solution:
         turns = turns_p + turns_q + 1
 
         return turns
+# Negative Weight Cycle
+
+class Solution:
+    def isNegativeWeightCycle(self, V: int, edges: list[list[int]]) -> bool:
+       dist = [0] * V
+
+       # Relax all edges V-1 times
+       for _ in range(V - 1):
+           changed = False
+
+           for u, v, w in edges:
+               if dist[u] + w < dist[v]:
+                   dist[v] = dist[u] + w
+                   changed = True
+
+           if not changed:
+               return False
+
+       # If an edge can still be relaxed on the V-th iteration,
+       # a negative-weight cycle exists.
+       for u, v, w in edges:
+           if dist[u] + w < dist[v]:
+               return True

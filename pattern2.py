@@ -3964,15 +3964,45 @@ class Solution:
         return ans
 
 # Minimum Cost Selection
+
+
 class Solution:
 
     def minCost(self, mat):
         dp = mat[0][:]
-        for i in range(1,len(mat)):
-            a,b,c = dp
-            dp =[
-                mat[i][0]+min(b,c),
-                mat[i][1]+min(a,c),
-                mat[i][2]+min(a,b)
-                ]
+        for i in range(1, len(mat)):
+            a, b, c = dp
+            dp = [
+                mat[i][0]+min(b, c),
+                mat[i][1]+min(a, c),
+                mat[i][2]+min(a, b)
+            ]
         return min(dp)
+
+# Count Subsequences Divisible by n
+class Solution:
+    def countSubsequences(self, s, n):
+        # code here
+        MOD = 1000000007
+
+        dp = [0] * n
+
+        for ch in s:
+            digit = int(ch)
+
+            # Copy old states because every occurrence
+            # can either be taken or skipped.
+            new_dp = dp[:]
+
+            # Start a new subsequence with this digit
+            new_dp[digit % n] = (new_dp[digit % n] + 1) % MOD
+
+            # Append this digit to every existing subsequence
+            for r in range(n):
+                if dp[r]:
+                    nr = (r * 10 + digit) % n
+                    new_dp[nr] = (new_dp[nr] + dp[r]) % MOD
+
+            dp = new_dp
+
+        return dp[0]

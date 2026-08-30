@@ -4006,3 +4006,48 @@ class Solution:
             dp = new_dp
 
         return dp[0]
+
+
+# Marks from Ranks
+class Solution:
+
+    def getMarks(self, l, r, rank):
+        """code here"""
+        m = len(l)
+
+        # prefix[i] = total number of valid marks
+        # in intervals 0 ... i
+        prefix = [0] * m
+
+        total = 0
+
+        for i in range(m):
+            total += r[i] - l[i] + 1
+            prefix[i] = total
+
+        ans = []
+
+        for k in rank:
+            # Find first interval whose cumulative count >= k
+            low = 0
+            high = m - 1
+
+            while low < high:
+                mid = (low + high) // 2
+
+                if prefix[mid] >= k:
+                    high = mid
+                else:
+                    low = mid + 1
+
+            i = low
+
+            # Marks before this interval
+            before = 0 if i == 0 else prefix[i - 1]
+
+            # Position inside interval
+            mark = l[i] + (k - before - 1)
+
+            ans.append(mark)
+
+        return ans

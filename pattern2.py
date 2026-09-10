@@ -4065,3 +4065,24 @@ class Solution:
                     cnt+=1
             ans +=(cnt*(cnt-1)//2)*mask
         return ans
+# Pairs with Given GCD and LCM
+
+
+class Solution:
+
+    def pairCount(self, x, y):
+        """code here"""
+        if y % x != 0:
+            return 0
+        n = y//x
+        count = 0
+        p = 2
+        while p*p <= n:
+            if n % p == 0:
+                count += 1
+                while n % p == 0:
+                    n //= p
+            p += 1
+        if n > 1:
+            count += 1
+        return 1 << count

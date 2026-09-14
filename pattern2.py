@@ -4086,3 +4086,51 @@ class Solution:
         if n > 1:
             count += 1
         return 1 << count
+
+# Shortest Safe Route in Grid
+from collections import deque
+
+class Solution:
+    def shortestPath(self, mat: list[list[int]]) -> int:
+        n = len(mat)
+        m = len(mat[0])
+
+        # safe[i][j] = whether the cell can be used
+        safe = [[True] * m for _ in range(n)]
+
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+
+        # Mark mines and their adjacent cells as unsafe
+        for i in range(n):
+            for j in range(m):
+                if mat[i][j] == 0:
+                    safe[i][j] = False
+
+                    for di, dj in directions:
+                        ni, nj = i + di, j + dj
+                        if 0 <= ni < n and 0 <= nj < m:
+                            safe[ni][nj] = False
+
+        # Multi-source BFS from every safe cell in the first column
+        q = deque()
+
+        for i in range(n):
+            if safe[i][0]:
+                q.append((i, 0, 1))
+                safe[i][0] = False
+
+        while q:
+            r, c, dist = q.popleft()
+
+            # Reached the rightmost column
+            if c == m - 1:
+                return dist
+
+            for dr, dc in directions:
+                nr, nc = r + dr, c + dc
+
+                if 0 <= nr < n and 0 <= nc < m and safe[nr][nc]:
+                    safe[nr][nc] = False
+                    q.append((nr, nc, dist + 1))
+
+        return -1

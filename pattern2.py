@@ -4134,3 +4134,48 @@ class Solution:
                     q.append((nr, nc, dist + 1))
 
         return -1
+
+
+# Visit Leaves with Budget
+
+
+class Solution:
+    def getCount(self, root, k):
+        if not root:
+            return 0
+
+        # freq[level] = number of leaves at that level
+        freq = [0] * (k + 1)
+
+        q = deque([(root, 1)])
+
+        while q:
+            node, level = q.popleft()
+
+            if node.left is None and node.right is None:
+                if level <= k:
+                    freq[level] += 1
+                continue
+
+            if node.left:
+                q.append((node.left, level + 1))
+
+            if node.right:
+                q.append((node.right, level + 1))
+
+        ans = 0
+
+        # Always choose leaves with smallest cost first
+        for level in range(1, k + 1):
+            if freq[level] == 0:
+                continue
+
+            can_take = min(freq[level], k // level)
+
+            ans += can_take
+            k -= can_take * level
+
+            if k == 0:
+                break
+
+        return ans

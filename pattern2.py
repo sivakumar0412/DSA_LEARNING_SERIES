@@ -4194,3 +4194,38 @@ class Solution:
                 j+=1
             ans+=j
         return ans
+
+# Min Edge Reversals for Path
+
+
+class Solution:
+    def minimumEdgeReversal(self, edges: list[list[int]], n: int, src: int, dst: int) -> int:
+        graph = [[] for _ in range(n + 1)]
+
+        for u, v in edges:
+            # Original direction: cost 0
+            graph[u].append((v, 0))
+
+            # Reverse direction: cost 1
+            graph[v].append((u, 1))
+
+        dist = [float('inf')] * (n + 1)
+        dist[src] = 0
+
+        dq = deque([src])
+
+        while dq:
+            u = dq.popleft()
+
+            for v, cost in graph[u]:
+                new_dist = dist[u] + cost
+
+                if new_dist < dist[v]:
+                    dist[v] = new_dist
+
+                    if cost == 0:
+                        dq.appendleft(v)
+                    else:
+                        dq.append(v)
+
+        return -1 if dist[dst] == float('inf') else dist[dst]

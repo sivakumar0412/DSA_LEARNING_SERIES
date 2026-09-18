@@ -4229,3 +4229,22 @@ class Solution:
                         dq.append(v)
 
         return -1 if dist[dst] == float('inf') else dist[dst]
+
+# Minimum Absolute Difference In BST
+class Solution:
+    def absDiff(self, root):
+        # code here
+        stack = []
+        curr = root
+        prev = None
+        ans = float('inf')
+        while stack or curr:
+            while curr:
+                stack.append(curr)
+                curr=curr.left
+            curr = stack.pop()
+            if prev is not None:
+                ans = min(ans,curr.data-prev)
+            prev = curr.data
+            curr = curr.right
+        return ans

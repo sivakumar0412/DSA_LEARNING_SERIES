@@ -4231,6 +4231,8 @@ class Solution:
         return -1 if dist[dst] == float('inf') else dist[dst]
 
 # Minimum Absolute Difference In BST
+
+
 class Solution:
     def absDiff(self, root):
         # code here
@@ -4241,10 +4243,42 @@ class Solution:
         while stack or curr:
             while curr:
                 stack.append(curr)
-                curr=curr.left
+                curr = curr.left
             curr = stack.pop()
             if prev is not None:
-                ans = min(ans,curr.data-prev)
+                ans = min(ans, curr.data-prev)
             prev = curr.data
             curr = curr.right
         return ans
+
+# Min Cost To Make Two Strings Identical
+class Solution:
+    def findMinCost(self, s1: str, s2: str, costS1: int, costS2: int) -> int:
+        n = len(s1)
+        m = len(s2)
+
+        # dp[j] = minimum cost for current prefix of s1
+        # and first j characters of s2
+        dp = [j * costS2 for j in range(m + 1)]
+
+        for i in range(1, n + 1):
+            prev = dp[0]
+
+            # Delete s1[i-1] when s2 is empty
+            dp[0] = i * costS1
+
+            for j in range(1, m + 1):
+                old = dp[j]
+
+                if s1[i - 1] == s2[j - 1]:
+                    dp[j] = prev
+                else:
+                    # Delete from s1 OR delete from s2
+                    dp[j] = min(
+                        dp[j] + costS1,
+                        dp[j - 1] + costS2
+                    )
+
+                prev = old
+
+        return dp[m]

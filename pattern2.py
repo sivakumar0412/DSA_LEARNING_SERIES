@@ -4329,3 +4329,30 @@ class Solution:
 
         # Both trees must have the same number of levels
         return not q1 and not q2
+
+# Minimum Cost Pizza Selection
+class Solution:
+    def minimumCost(self, x, s, m, l, cs, cm, cl):
+        # dp[a] = minimum cost to get at least/around a area
+        INF = 10**18
+
+        dp = [INF] * (x + max(s, m, l) + 1)
+        dp[0] = 0
+
+        for area in range(x + 1):
+            if dp[area] == INF:
+                continue
+
+            # Buy small pizza
+            new_area = min(x, area + s)
+            dp[new_area] = min(dp[new_area], dp[area] + cs)
+
+            # Buy medium pizza
+            new_area = min(x, area + m)
+            dp[new_area] = min(dp[new_area], dp[area] + cm)
+
+            # Buy large pizza
+            new_area = min(x, area + l)
+            dp[new_area] = min(dp[new_area], dp[area] + cl)
+
+        return dp[x]

@@ -4356,3 +4356,70 @@ class Solution:
             dp[new_area] = min(dp[new_area], dp[area] + cl)
 
         return dp[x]
+
+# Range GCD Queries
+
+
+class Solution:
+    def processQueries(self, arr: list[int], queries: list[list[int]]) -> list[int]:
+        n = len(arr)
+
+        # Segment tree
+        size = 1
+        while size < n:
+            size <<= 1
+
+        tree = [0] * (2 * size)
+
+        # Build tree
+        for i in range(n):
+            tree[size + i] = arr[i]
+
+        from math import gcd
+
+        for i in range(size - 1, 0, -1):
+            tree[i] = gcd(tree[2 * i], tree[2 * i + 1])
+
+        def update(index, value):
+            pos = size + index
+            tree[pos] = value
+
+            pos //= 2
+            while pos:
+                tree[pos] = gcd(tree[2 * pos], tree[2 * pos + 1])
+                pos //= 2
+
+        def range_gcd(left, right):
+            left += size
+            right += size
+
+            result_left = 0
+            result_right = 0
+
+            while left <= right:
+                if left & 1:
+                    result_left = gcd(result_left, tree[left])
+                    left += 1
+
+                if not (right & 1):
+                    result_right = gcd(tree[right], result_right)
+                    right -= 1
+
+                left //= 2
+                right //= 2
+
+            return gcd(result_left, result_right)
+
+        answer = []
+
+        for query in queries:
+            if query[0] == 0:
+                # [0, l, r]
+                l, r = query[1], query[2]
+                answer.append(range_gcd(l, r))
+            else:
+                # [1, index, value]
+                index, value = query[1], query[2]
+                update(index, value)
+
+        return answer

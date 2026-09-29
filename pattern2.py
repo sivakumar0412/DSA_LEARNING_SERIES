@@ -4423,3 +4423,49 @@ class Solution:
                 update(index, value)
 
         return answer
+
+# Min Steps by Knight
+from collections import deque
+
+class Solution:
+    def minStepToReachTarget(self, knightPos: list[int], targetPos: list[int], n: int) -> int:
+        sx, sy = knightPos
+        tx, ty = targetPos
+
+        if sx == tx and sy == ty:
+            return 0
+
+        # Convert 1-based coordinates to 0-based
+        sx -= 1
+        sy -= 1
+        tx -= 1
+        ty -= 1
+
+        moves = [
+            (2, 1), (2, -1),
+            (-2, 1), (-2, -1),
+            (1, 2), (1, -2),
+            (-1, 2), (-1, -2)
+        ]
+
+        visited = [[False] * n for _ in range(n)]
+        visited[sx][sy] = True
+
+        q = deque([(sx, sy, 0)])
+
+        while q:
+            x, y, steps = q.popleft()
+
+            for dx, dy in moves:
+                nx = x + dx
+                ny = y + dy
+
+                if 0 <= nx < n and 0 <= ny < n and not visited[nx][ny]:
+
+                    if nx == tx and ny == ty:
+                        return steps + 1
+
+                    visited[nx][ny] = True
+                    q.append((nx, ny, steps + 1))
+
+        return -1

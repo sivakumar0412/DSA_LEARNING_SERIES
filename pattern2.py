@@ -4515,3 +4515,34 @@ class Solution:
         if completed !=n:
             return -1
         return answer
+
+# Lexicographically Smallest Rotation
+class Solution:
+    def lexiString(self, s: str) -> str:
+        n = len(s)
+
+        # Compare rotations starting at i and j
+        i, j = 0, 1
+
+        while i < n and j < n:
+            k = 0
+
+            while k < n and s[(i + k) % n] == s[(j + k) % n]:
+                k += 1
+
+            if k == n:
+                break
+
+            # The rotation with the larger character cannot be smallest
+            if s[(i + k) % n] > s[(j + k) % n]:
+                i = i + k + 1
+                if i == j:
+                    i += 1
+            else:
+                j = j + k + 1
+                if i == j:
+                    j += 1
+
+        start = min(i, j)
+
+        return s[start:] + s[:start]

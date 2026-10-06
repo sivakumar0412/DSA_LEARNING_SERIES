@@ -4594,3 +4594,66 @@ class Solution:
                         perimeter -= 2
 
         return perimeter
+
+# Longest Increasing Path in Matrix
+from collections import deque
+
+class Solution:
+    def longIncPath(self, matrix, n, m):
+        total = n * m
+
+        # indegree[i] = number of adjacent cells with
+        # a strictly smaller value
+        indegree = [0] * total
+        dp = [1] * total
+
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+
+        # Calculate indegrees
+        for r in range(n):
+            for c in range(m):
+                idx = r * m + c
+                value = matrix[r][c]
+
+                for dr, dc in directions:
+                    nr = r + dr
+                    nc = c + dc
+
+                    if 0 <= nr < n and 0 <= nc < m:
+                        if matrix[nr][nc] < value:
+                            indegree[idx] += 1
+
+        # Cells with no smaller neighbor can be starting points
+        q = deque()
+
+        for i in range(total):
+            if indegree[i] == 0:
+                q.append(i)
+
+        ans = 1
+
+        while q:
+            idx = q.popleft()
+
+            r = idx // m
+            c = idx % m
+
+            for dr, dc in directions:
+                nr = r + dr
+                nc = c + dc
+
+                if 0 <= nr < n and 0 <= nc < m:
+                    # We can move from current cell to a larger cell
+                    if matrix[nr][nc] > matrix[r][c]:
+                        nxt = nr * m + nc
+
+                        dp[nxt] = max(dp[nxt], dp[idx] + 1)
+
+                        indegree[nxt] -= 1
+
+                        if indegree[nxt] == 0:
+                            q.append(nxt)
+
+                        ans = max(ans, dp[nxt])
+
+        return ans

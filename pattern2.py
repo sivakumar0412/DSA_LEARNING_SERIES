@@ -4657,3 +4657,19 @@ class Solution:
                         ans = max(ans, dp[nxt])
 
         return ans
+
+# Maximum Frequency with K Increments
+class Solution:
+    def maxFrequency(self, arr, k):
+        # code here
+        arr.sort()
+        left = 0
+        window_sum=0
+        ans=1
+        for right in range(len(arr)):
+            window_sum +=arr[right]
+            while arr[right] * (right-left+1)-window_sum > k:
+                window_sum-= arr[left]
+                left +=1
+            ans = max(ans,right-left+1)
+        return ans

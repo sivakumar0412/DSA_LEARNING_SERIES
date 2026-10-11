@@ -4673,3 +4673,9 @@ class Solution:
                 left +=1
             ans = max(ans,right-left+1)
         return ans
+
+# Sort Two Parts Sorted
+class Solution:
+    def mergeTwoParts(self, arr):
+        arr.sort()
+        return arr

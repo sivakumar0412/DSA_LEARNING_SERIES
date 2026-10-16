@@ -4679,3 +4679,22 @@ class Solution:
     def mergeTwoParts(self, arr):
         arr.sort()
         return arr
+
+# Successful Binary Searches Irrespective of Pivot
+class Solution:
+    def countAlwaysFound(self, arr):
+        # code here
+        n = len(arr)
+        left_max=[0]*n
+        right_min=[0]*n
+        left_max[0]=float('-inf')
+        for i in range(1,n):
+            left_max[i]=max(left_max[i-1],arr[i-1])
+        right_min[n-1]=float('inf')
+        for i in range(n-2,-1,-1):
+            right_min[i]=min(right_min[i+1],arr[i+1])
+        count = 0
+        for i in range(n):
+            if left_max[i]<arr[i]<right_min[i]:
+                count+=1
+        return count

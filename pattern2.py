@@ -4698,3 +4698,35 @@ class Solution:
             if left_max[i]<arr[i]<right_min[i]:
                 count+=1
         return count
+
+# Count Indices That Escape Array
+class Solution:
+    def goodIndices(self, arr):
+        # code here
+        n=len(arr)
+        state=[0]*n
+        for start in range(n):
+            if state[start]!=0:
+                continue
+            path = []
+            curr= start
+            while 0 <=curr<n and state[curr]==0:
+                state[curr]=1
+                path.append(curr)
+                if arr[curr]==0:
+                    curr=curr
+                    break
+                curr+=arr[curr]
+            if curr<0 or curr>=n:
+                result =2
+            elif state[curr]==2:
+                result=2
+            elif state[curr]==3 or state[curr]==1:
+                result=3
+            else:
+                result=3
+            for node in reversed(path):
+                if arr[node]==0:
+                    result=3
+                state[node]=result
+        return state.count(2)

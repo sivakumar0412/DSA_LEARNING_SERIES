@@ -4730,3 +4730,13 @@ class Solution:
                     result=3
                 state[node]=result
         return state.count(2)
+
+# Minimum Sum Subarray
+class Solution:
+    def minSubarraySum(self, arr: list[int]) -> int:
+        current=arr[0]
+        minimum=arr[0]
+        for i in range(1,len(arr)):
+            current=min(arr[i],current+arr[i])
+            minimum=min(minimum,current)
+        return minimum

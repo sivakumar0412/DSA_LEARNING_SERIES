@@ -4740,3 +4740,34 @@ class Solution:
             current=min(arr[i],current+arr[i])
             minimum=min(minimum,current)
         return minimum
+
+# Palindrome with Replacement
+class Solution:
+    def minimumSum(self, s: str) -> int:
+        n = len(s)
+        half = (n + 1) // 2
+        left = list(s[:half])
+
+        for i in range(half):
+            j = n - 1 - i
+
+            if s[i] != '?' and s[j] != '?' and s[i] != s[j]:
+                return -1
+
+            if left[i] == '?':
+                left[i] = s[j]
+
+        # Minimize the variation across the first half.
+        total = 0
+        prev = None
+
+        for ch in left:
+            if ch == '?':
+                continue
+
+            if prev is not None:
+                total += abs(ord(ch) - ord(prev))
+
+            prev = ch
+
+        return total * 2

@@ -4771,3 +4771,25 @@ class Solution:
             prev = ch
 
         return total * 2
+
+# Trace Path
+class Solution:
+    def isPossible(self, n: int, m: int, s: str) -> bool:
+        # code here
+        row=col=0
+        min_row=max_row=0
+        min_col=max_col=0
+        for ch in s:
+            if ch=='L':
+                col-=1
+            elif ch=='R':
+                col+=1
+            elif ch=='D':
+                row-=1
+            elif ch=='U':
+                row+=1
+            min_row = min(min_row, row)
+            max_row = max(max_row, row)
+            min_col = min(min_col, col)
+            max_col = max(max_col, col)
+        return(max_row-min_row<n and max_col-min_col<m)

@@ -4793,3 +4793,52 @@ class Solution:
             min_col = min(min_col, col)
             max_col = max(max_col, col)
         return(max_row-min_row<n and max_col-min_col<m)
+
+# Minimize Max Min Diff with Subarray Removal
+class Solution:
+    def minDiff(self, k: int, arr: list[int]) -> int:
+        n = len(arr)
+
+        if k == 0:
+            return max(arr) - min(arr)
+
+        remaining = n - k
+        if remaining <= 1:
+            return 0
+
+        # Prefix minimums and maximums
+        pref_min = [0] * n
+        pref_max = [0] * n
+        pref_min[0] = pref_max[0] = arr[0]
+
+        for i in range(1, n):
+            pref_min[i] = min(pref_min[i - 1], arr[i])
+            pref_max[i] = max(pref_max[i - 1], arr[i])
+
+        # Suffix minimums and maximums
+        suff_min = [0] * n
+        suff_max = [0] * n
+        suff_min[-1] = suff_max[-1] = arr[-1]
+
+        for i in range(n - 2, -1, -1):
+            suff_min[i] = min(suff_min[i + 1], arr[i])
+            suff_max[i] = max(suff_max[i + 1], arr[i])
+
+        ans = float('inf')
+
+        # Remove arr[i : i+k]
+        for i in range(n - k + 1):
+            left = i - 1
+            right = i + k
+
+            if left < 0:
+                mn, mx = suff_min[right], suff_max[right]
+            elif right >= n:
+                mn, mx = pref_min[left], pref_max[left]
+            else:
+                mn = min(pref_min[left], suff_min[right])
+                mx = max(pref_max[left], suff_max[right])
+
+            ans = min(ans, mx - mn)
+
+        return ans

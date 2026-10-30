@@ -4879,3 +4879,38 @@ class Solution:
             heapq.heappush(files, cost)
 
         return total_cost
+
+# Subsets with MEX in Range
+class Solution:
+    def cntSubsets(self, arr, l, r):
+        MOD = 10**9 + 7
+        n = len(arr)
+
+        freq = [0] * (r + 1)
+
+        for x in arr:
+            if x <= r:
+                freq[x] += 1
+
+        # Precompute powers of 2
+        pow2 = [1] * (n + 1)
+        for i in range(1, n + 1):
+            pow2[i] = (pow2[i - 1] * 2) % MOD
+
+        ans = 0
+        required = 1
+        prefix_count = 0
+
+        for k in range(r + 1):
+            prefix_count += freq[k]
+
+            if k >= l:
+                # Select at least one of each value 0 to k-1,
+                # select none of value k, and freely select values > k.
+                ways = (required * pow2[n - prefix_count]) % MOD
+                ans = (ans + ways) % MOD
+
+            # Prepare required selections for the next MEX value
+            required = (required * (pow2[freq[k]] - 1)) % MOD
+
+        return ans

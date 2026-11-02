@@ -4914,3 +4914,32 @@ class Solution:
             required = (required * (pow2[freq[k]] - 1)) % MOD
 
         return ans
+
+# Largest Sum Cycle
+class Solution:
+    def largestSumCycle(self, edge):
+        n = len(edge)
+        visited = [False] * n
+        max_sum = -1
+
+        for start in range(n):
+            if visited[start]:
+                continue
+
+            path = []
+            position = {}
+            curr = start
+
+            while curr != -1 and not visited[curr]:
+                visited[curr] = True
+                position[curr] = len(path)
+                path.append(curr)
+                curr = edge[curr]
+
+            # A cycle exists if curr is in the current traversal path
+            if curr in position:
+                cycle_start = position[curr]
+                cycle_sum = sum(path[cycle_start:])
+                max_sum = max(max_sum, cycle_sum)
+
+        return max_sum

@@ -4943,3 +4943,46 @@ class Solution:
                 max_sum = max(max_sum, cycle_sum)
 
         return max_sum
+
+# Count Tree Paths With Limited Max Edge Weight
+class Solution:
+    def maximumWeight(self, n, edges, queries):
+        edges.sort(key=lambda x: x[2])
+
+        indexed_queries = sorted(
+            [(x, i) for i, x in enumerate(queries)]
+        )
+
+        parent = list(range(n + 1))
+        size = [1] * (n + 1)
+
+        def find(x):
+            while parent[x] != x:
+                parent[x] = parent[parent[x]]
+                x = parent[x]
+            return x
+
+        ans = [0] * len(queries)
+        edge_idx = 0
+        paths = 0
+
+        for limit, query_idx in indexed_queries:
+            while edge_idx < len(edges) and edges[edge_idx][2] <= limit:
+                u, v, w = edges[edge_idx]
+                root_u = find(u)
+                root_v = find(v)
+
+                if root_u != root_v:
+                    paths += size[root_u] * size[root_v]
+
+                    if size[root_u] < size[root_v]:
+                        root_u, root_v = root_v, root_u
+
+                    parent[root_v] = root_u
+                    size[root_u] += size[root_v]
+
+                edge_idx += 1
+
+            ans[query_idx] = paths
+
+        return ans

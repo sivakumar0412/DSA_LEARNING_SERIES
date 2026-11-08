@@ -4988,13 +4988,24 @@ class Solution:
         return ans
 
 # XOR of All Subarray XORs
+
+
 class Solution:
     def subarrayXor(self, arr):
-        # code here 
-        n=len(arr)
-        if n%2==0:
+        # code here
+        n = len(arr)
+        if n % 2 == 0:
             return 0
-        result=0
-        for i in range(0,n,2):
-            result ^=arr[i]
+        result = 0
+        for i in range(0, n, 2):
+            result ^= arr[i]
         return result
+
+# Minimum Time with 2 Scanners
+class Solution:
+    def minTime(self, n: int, s1: int, s2: int) -> int:
+        # code here
+        ans = float('inf')
+        for i in range(n+1):
+            ans=min(ans,max(i*s1,(n-i)*s2))
+        return ans

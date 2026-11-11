@@ -5009,3 +5009,16 @@ class Solution:
         for i in range(n+1):
             ans=min(ans,max(i*s1,(n-i)*s2))
         return ans
+
+# Any Duplicate Within K Distance
+class Solution:
+    def checkWithinK(self, arr: list[int], k: int) -> bool:
+        # code here
+        seen=set()
+        for i in range(len(arr)):
+            if arr[i] in seen:
+                return True
+            seen.add(arr[i])
+            if len(seen)>k:
+                seen.remove(arr[i-k])
+        return False

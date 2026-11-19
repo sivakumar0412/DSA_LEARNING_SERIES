@@ -5049,3 +5049,10 @@ class Solution:
                 k += 1
 
         return 0
+
+# Sort in Specific Order
+class Solution:
+    def sortIt(self, arr):
+        arr.sort(key=lambda x:(x%2==0,-x if x % 2 else x))
+        return arr
+    

@@ -5056,3 +5056,15 @@ class Solution:
         arr.sort(key=lambda x:(x%2==0,-x if x % 2 else x))
         return arr
     
+# Min Flips for Alternate
+class Solution:
+    def minFlips(self, s):
+        # Code here
+        flips1=0
+        flips2=0
+        for i in range(len(s)):
+            if s[i]!=str(i%2):
+                flips1 +=1
+            else:
+                flips2 +=1
+        return min(flips1,flips2)
